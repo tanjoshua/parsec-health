@@ -2,9 +2,8 @@
     import BreezeApplicationLogo from "@/Components/ApplicationLogo.svelte";
     import BreezeDropdown from "@/Components/Dropdown.svelte";
     import BreezeDropdownLink from "@/Components/DropdownLink.svelte";
-    import BreezeNavLink from "@/Components/NavLink.svelte";
     import BreezeResponsiveNavLink from "@/Components/ResponsiveNavLink.svelte";
-    import { inertia, page, Link } from "@inertiajs/svelte";
+    import { page, Link } from "@inertiajs/svelte";
     let showingNavigationDropdown = false;
     export let user = $page.props.auth.user;
 </script>
@@ -26,7 +25,7 @@
                         </div>
 
                         <!-- Navigation Links -->
-                        <div
+                        <!-- <div
                             class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
                         >
                             <BreezeNavLink
@@ -47,7 +46,7 @@
                             >
                                 Links
                             </BreezeNavLink>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -86,7 +85,7 @@
                                         method="post"
                                         as="button"
                                         type="button"
-                                        >
+                                    >
                                         Log Out
                                     </BreezeDropdownLink>
                                 </div>

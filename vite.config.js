@@ -9,6 +9,10 @@ export default defineConfig({
             ssr: 'resources/js/ssr.ts',
             refresh: true,
         }),
-        svelte({}),
+        svelte({
+            compilerOptions: {
+                hmr: true  // Use the new recommended way to enable HMR
+            }
+        }),
     ],
 });
