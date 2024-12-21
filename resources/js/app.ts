@@ -1,27 +1,20 @@
 import '../css/app.css';
 import './bootstrap';
 
-import { createInertiaApp } from '@inertiajs/vue3';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { createApp, DefineComponent, h } from 'vue';
-import { ZiggyVue } from '../../vendor/tightenco/ziggy';
-
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+import { createInertiaApp, ResolvedComponent } from '@inertiajs/svelte';
+import { hydrate, mount } from 'svelte';
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
-    resolve: (name) =>
-        resolvePageComponent(
-            `./Pages/${name}.vue`,
-            import.meta.glob<DefineComponent>('./Pages/**/*.vue'),
-        ),
-    setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .use(ZiggyVue)
-            .mount(el);
+    resolve: (name: string) => {
+        const pages = import.meta.glob<any>('./Pages/**/*.svelte', { eager: true });
+        return pages[`./Pages/${name}.svelte`] as unknown as ResolvedComponent;
     },
-    progress: {
-        color: '#4B5563',
+    setup({ el, App, props }) {
+        if (!el) throw new Error('Target element not found');
+        if (el.dataset.serverRendered === 'true') {
+            hydrate(App, { target: el, props });
+        } else {
+            mount(App, { target: el, props });
+        }
     },
 });
