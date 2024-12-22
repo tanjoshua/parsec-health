@@ -6,8 +6,8 @@ import { hydrate, mount } from 'svelte';
 
 createInertiaApp({
     resolve: (name: string) => {
-        const pages = import.meta.glob<any>('./Pages/**/*.svelte', { eager: true });
-        return pages[`./Pages/${name}.svelte`] as unknown as ResolvedComponent;
+        const pages = import.meta.glob<any>('./pages/**/*.svelte', { eager: true });
+        return pages[`./pages/${name}.svelte`] as unknown as ResolvedComponent;
     },
     setup({ el, App, props }) {
         if (!el) throw new Error('Target element not found');
