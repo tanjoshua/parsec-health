@@ -43,16 +43,15 @@
 
     <form on:submit|preventDefault={onSubmit}>
         <div>
-            <BreezeLabel for="email" value="Email" />
+            <BreezeLabel for="login" value="Email or Username" />
             <BreezeInput
-                id="email"
-                type="email"
+                id="login"
+                type="text"
                 class="mt-1 block w-full"
-                value={form.email}
+                value={form.login}
                 required
                 autofocus
-                autocomplete="username"
-                on:input={(evt) => ($form.email = evt.detail)}
+                on:input={(evt) => ($form.login = evt.detail)}
             />
         </div>
 

@@ -9,6 +9,7 @@
 
     let form = useForm({
         name: null,
+        username: null,
         email: null,
         password: null,
         password_confirmation: null,
@@ -47,6 +48,19 @@
                 autofocus
                 autocomplete="name"
                 on:input={(evt) => ($form.name = evt.detail)}
+            />
+        </div>
+
+        <div class="mt-4">
+            <BreezeLabel for="username" value="Username" />
+            <BreezeInput
+                id="username"
+                type="text"
+                class="mt-1 block w-full"
+                value={form.username}
+                required
+                autofocus
+                on:input={(evt) => ($form.username = evt.detail)}
             />
         </div>
 
