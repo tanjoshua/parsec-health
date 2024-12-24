@@ -6,7 +6,10 @@
     /* svelte-ignore unused-export-let */
     export let auth = {};
     import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.svelte";
+    import Card from "@/components/ui/card/card.svelte";
     import * as Tabs from "@/components/ui/tabs/index.ts";
+
+    // let props: {} = $props();
 </script>
 
 <svelte:head>
@@ -24,7 +27,11 @@
                         <Tabs.Trigger value="completed">Completed</Tabs.Trigger>
                     </Tabs.List>
                     <Tabs.Content value="active">
-                        Make changes to your account here.
+                        {#snippet patientCard()}
+                            <div>
+                                <Card></Card>
+                            </div>
+                        {/snippet}
                     </Tabs.Content>
                     <Tabs.Content value="completed"
                         >Change your password here.</Tabs.Content

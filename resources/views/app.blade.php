@@ -8,7 +8,7 @@
 
         <!-- Scripts -->
         @routes
-        @vite(['resources/js/app.ts', "resources/js/pages/{$page['component']}.svelte"])
+        @vite(['resources/js/app.ts', "resources/js/Pages/{$page['component']}.svelte"])
         @inertiaHead
     </head>
     <body class="font-sans antialiased">
