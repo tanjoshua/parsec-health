@@ -12,8 +12,8 @@
     export let status;
 
     const form = useForm({
-        email: null,
-        password: null,
+        login: "",
+        password: "",
         remember: false,
     });
 
@@ -23,7 +23,7 @@
 
     const onSubmit = () => {
         $form.post("/login", {
-            onSuccess: () => $form.reset(),
+            onSuccess: () => $form.reset("password"),
         });
     };
 </script>
@@ -48,10 +48,9 @@
                 id="login"
                 type="text"
                 class="mt-1 block w-full"
-                value={form.login}
+                bind:value={$form.login}
                 required
                 autofocus
-                on:input={(evt) => ($form.login = evt.detail)}
             />
         </div>
 
@@ -61,17 +60,16 @@
                 id="password"
                 type="password"
                 class="mt-1 block w-full"
-                value={form.password}
+                bind:value={$form.password}
                 required
                 autocomplete="current-password"
-                on:input={(evt) => ($form.password = evt.detail)}
             />
         </div>
 
         <div class="block mt-4">
             <!-- svelte-ignore a11y-label-has-associated-control -->
             <label class="flex items-center">
-                <BreezeCheckbox name="remember" bind:checked={form.remember} />
+                <BreezeCheckbox name="remember" bind:checked={$form.remember} />
                 <span class="ml-2 text-sm text-gray-600">Remember me</span>
             </label>
         </div>
@@ -87,9 +85,8 @@
             {/if}
 
             <BreezeButton
-                class="ml-4"
-                sclass:opacity-25={form.processing}
-                disabled={form.processing}
+                class={`ml-4 ${$form.processing ? "opacity-25" : ""}`}
+                disabled={$form.processing}
             >
                 Log in
             </BreezeButton>

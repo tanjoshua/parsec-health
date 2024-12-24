@@ -20,8 +20,10 @@
     <div class="container mx-auto p-4">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div>
-                <h2 class="text-xl font-semibold mb-4">Patient Visits</h2>
-                <Tabs.Root value="account">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold mb-4">Patient Visits</h2>
+                </div>
+                <Tabs.Root value="active">
                     <Tabs.List class="grid w-full grid-cols-2">
                         <Tabs.Trigger value="active">Active</Tabs.Trigger>
                         <Tabs.Trigger value="completed">Completed</Tabs.Trigger>
@@ -33,9 +35,9 @@
                             </div>
                         {/snippet}
                     </Tabs.Content>
-                    <Tabs.Content value="completed"
-                        >Change your password here.</Tabs.Content
-                    >
+                    <Tabs.Content value="completed">
+                        <div></div>
+                    </Tabs.Content>
                 </Tabs.Root>
             </div>
             <div></div>
