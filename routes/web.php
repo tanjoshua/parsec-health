@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\TenantController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -18,18 +18,16 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     $tenant = Auth::user()->tenants->first();
     if ($tenant) {
-        return redirect()->route('tenants.show', $tenant);
+        return redirect()->route('tenants.dashboard', $tenant);
     }
 
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('tenants', TenantController::class)->only(['show']);
-
-    Route::get('/about', function () {
-        return Inertia::render('About');
-    })->name('about');
+    Route::prefix('tenants/{tenant}')->name('tenants.')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    });
 });
 
 require __DIR__.'/auth.php';

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Patient;
 use App\Models\Tenant;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -31,5 +32,11 @@ class DatabaseSeeder extends Seeder
 
         // Attach the user to the tenant
         $tenant->users()->attach($user);
+
+        // Create some test patients for the tenant
+        Patient::factory()
+            ->count(10)
+            ->forTenant($tenant)
+            ->create();
     }
 }

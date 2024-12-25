@@ -11,17 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tenants', function (Blueprint $table) {
+        Schema::create('patients', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->unsignedBigInteger('next_patient_number')->default(1);
             $table->timestamps();
-        });
 
-        Schema::create('user_tenant', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            // tenant relationships
             $table->foreignId('tenant_id')->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('tenant_patient_number');
+
+            // patient data
+            $table->string('name');
+            // $table->string('identification');
+
+            $table->unique(['tenant_id', 'tenant_patient_number']);
         });
     }
 
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tenants');
+        Schema::dropIfExists('patients');
     }
 };

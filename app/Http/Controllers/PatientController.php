@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tenant;
+use App\Models\Patient;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
-class TenantController extends Controller
+class PatientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,15 +34,15 @@ class TenantController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Tenant $tenant)
+    public function show(Patient $patient)
     {
-        return Inertia::render('Dashboard', ['tenant' => $tenant]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tenant $tenant)
+    public function edit(Patient $patient)
     {
         //
     }
@@ -51,7 +50,7 @@ class TenantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tenant $tenant)
+    public function update(Request $request, Patient $patient)
     {
         //
     }
@@ -59,7 +58,7 @@ class TenantController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tenant $tenant)
+    public function destroy(Patient $patient)
     {
         //
     }
