@@ -44,9 +44,11 @@ class DatabaseSeeder extends Seeder
         Visit::factory()
             ->count(10)
             ->forTenant($tenant)
-            ->sequence(fn ($sequence) => ['patient_id' => $patients[$sequence->index % count($patients)]->id])
+            ->sequence(fn ($sequence) => [
+                'patient_id' => $patients[$sequence->index % count($patients)]->id,
+                'registered_at' => now()->subHours(8)->addMinutes($sequence->index * 30),
+            ])
             ->create([
-                'registered_at' => now()->subHours(rand(1, 8)),
                 'left_at' => null,
             ]);
 
