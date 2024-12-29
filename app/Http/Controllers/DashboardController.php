@@ -12,6 +12,15 @@ class DashboardController extends Controller
      */
     public function index(Tenant $tenant)
     {
-        return Inertia::render('Dashboard', ['tenant' => $tenant]);
+        $activeVisits = $tenant->visits()
+            ->whereNull('left_at')
+            ->with('patient')
+            ->orderBy('registered_at', 'desc')
+            ->get();
+
+        return Inertia::render('Dashboard', [
+            'tenant' => $tenant,
+            'activeVisits' => $activeVisits,
+        ]);
     }
 }

@@ -20,17 +20,8 @@ class PatientFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'tenant_id' => fn () => Tenant::factory()->create()->id,
-            'tenant_patient_number' => function (array $attributes) {
-                return DB::transaction(function () use ($attributes) {
-                    $tenant = Tenant::lockForUpdate()->find($attributes['tenant_id']);
-                    $number = $tenant->next_patient_number;
-                    $tenant->next_patient_number += 1;
-                    $tenant->save();
-
-                    return $number;
-                });
-            },
+            'tenant_id' => null,
+            'tenant_patient_number' => null,
         ];
     }
 

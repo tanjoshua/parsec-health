@@ -19,33 +19,13 @@ class VisitFactory extends Factory
     public function definition(): array
     {
         return [
-            'tenant_id' => fn () => Tenant::factory()->create()->id,
-            'patient_id' => fn () => Patient::factory()->create()->id,
+            'tenant_id' => null,
+            'patient_id' => null,
             'registered_at' => fake()->dateTimeBetween('-1 week', 'now'),
             'left_at' => fn () => fake()->boolean(70) ? fake()->dateTimeBetween('-1 week', 'now') : null,
             'remarks' => fake()->optional(0.7)->sentence(),
             'notes' => fake()->optional(0.5)->paragraph(),
         ];
-    }
-
-    /**
-     * Indicate that the visit is active (patient hasn't left yet).
-     */
-    public function active(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'left_at' => null,
-        ]);
-    }
-
-    /**
-     * Indicate that the visit is completed (patient has left).
-     */
-    public function completed(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'left_at' => fake()->dateTimeBetween($attributes['registered_at'], 'now'),
-        ]);
     }
 
     /**

@@ -40,24 +40,26 @@ class DatabaseSeeder extends Seeder
             ->forTenant($tenant)
             ->create();
 
-        // Create some active visits
+        // Create some current visits (patients still in clinic)
         Visit::factory()
             ->count(10)
-            ->active()
-            ->recycle($patients)
             ->forTenant($tenant)
+            ->sequence(fn ($sequence) => ['patient_id' => $patients[$sequence->index % count($patients)]->id])
             ->create([
                 'registered_at' => now()->subHours(rand(1, 8)),
+                'left_at' => null,
             ]);
 
-        // Create some completed visits from the past week
+        // Create some past visits from the last week
         Visit::factory()
             ->count(10)
-            ->completed()
-            ->recycle($patients)
             ->forTenant($tenant)
+            ->sequence(fn ($sequence) => ['patient_id' => $patients[$sequence->index % count($patients)]->id])
             ->create([
                 'registered_at' => fake()->dateTimeBetween('-1 week', '-1 day'),
+                'left_at' => function (array $attributes) {
+                    return fake()->dateTimeBetween($attributes['registered_at'], 'now');
+                },
             ]);
     }
 }
