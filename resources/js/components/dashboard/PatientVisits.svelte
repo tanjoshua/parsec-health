@@ -13,6 +13,7 @@
         now: Date;
     }>();
 
+    let visitDrawerOpen = $state(false);
     let selectedVisit = $state<Visit | null>(null);
 
     function formatRegistrationDate(
@@ -31,7 +32,10 @@
     <div>
         <Card
             class="cursor-pointer hover:shadow-md transition-shadow"
-            onclick={() => (selectedVisit = visit)}
+            onclick={() => {
+                selectedVisit = visit;
+                visitDrawerOpen = true;
+            }}
         >
             <CardContent>
                 <div class="font-medium">
@@ -74,10 +78,10 @@
     </Tabs.Root>
 
     <Sheet.Root
-        open={!!selectedVisit}
+        open={visitDrawerOpen}
         onOpenChange={(open) => {
             if (!open) {
-                selectedVisit = null;
+                visitDrawerOpen = false;
             }
         }}
     >
