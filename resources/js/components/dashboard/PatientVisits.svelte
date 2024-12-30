@@ -4,6 +4,7 @@
     import dayjs from "dayjs";
     import relativeTime from "dayjs/plugin/relativeTime";
     import type { Visit } from "@/types/visit";
+    import * as Sheet from "../ui/sheet";
 
     dayjs.extend(relativeTime);
 
@@ -13,6 +14,17 @@
     }>();
 
     let selectedVisit = $state<Visit | null>(null);
+
+    function formatRegistrationDate(
+        date: string | Date | undefined,
+        now: Date,
+    ) {
+        if (!date) return "";
+        const registrationDate = dayjs(date);
+        return dayjs(now).isSame(registrationDate, "day")
+            ? registrationDate.format("h:mm A")
+            : registrationDate.format("DD/MM/YYYY h:mm A");
+    }
 </script>
 
 {#snippet visitCard(visit: Visit)}
@@ -27,14 +39,10 @@
                         .name}
                 </div>
                 <div class="text-sm font-light">
-                    Registered: {dayjs().isSame(
-                        dayjs(visit.registered_at),
-                        "day",
-                    )
-                        ? dayjs(visit.registered_at).format("h:mm A")
-                        : dayjs(visit.registered_at).format(
-                              "DD/MM/YYYY h:mm A",
-                          )}
+                    Registered: {formatRegistrationDate(
+                        visit.registered_at,
+                        props.now,
+                    )}
                     ({dayjs(visit.registered_at).from(props.now)})
                 </div>
 
@@ -64,4 +72,46 @@
             <div></div>
         </Tabs.Content>
     </Tabs.Root>
+
+    <Sheet.Root
+        open={!!selectedVisit}
+        onOpenChange={(open) => {
+            if (!open) {
+                selectedVisit = null;
+            }
+        }}
+    >
+        <Sheet.Content>
+            <Sheet.Header>
+                <Sheet.Title>
+                    #{selectedVisit?.patient.tenant_patient_number} -{" "}
+                    {selectedVisit?.patient.name}
+                </Sheet.Title>
+            </Sheet.Header>
+            <div class="py-4 grid gap-2">
+                <div class="grid">
+                    <div class="font-semibold">Registration</div>
+                    <div>
+                        {formatRegistrationDate(
+                            selectedVisit?.registered_at,
+                            props.now,
+                        )}
+                        ({dayjs(selectedVisit?.registered_at).from(props.now)})
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="font-semibold">Remarks</div>
+                    <div>
+                        {selectedVisit?.remarks}
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="font-semibold">Notes</div>
+                    <div>
+                        {selectedVisit?.notes}
+                    </div>
+                </div>
+            </div>
+        </Sheet.Content>
+    </Sheet.Root>
 </div>
