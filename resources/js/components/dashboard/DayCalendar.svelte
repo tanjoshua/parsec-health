@@ -2,6 +2,7 @@
     import dayjs from "dayjs";
     import { Clock } from "lucide-svelte";
     import { Button } from "../ui/button";
+    import { onMount } from "svelte";
     const props = $props<{
         now: Date;
     }>();
@@ -15,6 +16,10 @@
         const period = index < 12 ? "AM" : "PM";
         return `${hour} ${period}`;
     }
+
+    onMount(() => {
+        scrollToCurrentTime();
+    });
 
     function scrollToCurrentTime() {
         if (scheduleContainer) {
