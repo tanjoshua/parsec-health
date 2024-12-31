@@ -18,9 +18,12 @@ class DashboardController extends Controller
             ->orderBy('registered_at', 'desc')
             ->get();
 
+        $appointments = $tenant->appointments()->get();
+
         return Inertia::render('Dashboard', [
             'tenant' => $tenant,
             'activeVisits' => $activeVisits,
+            'appointments' => $appointments,
         ]);
     }
 }

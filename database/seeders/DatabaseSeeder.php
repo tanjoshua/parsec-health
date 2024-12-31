@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Appointment;
 use App\Models\Patient;
 use App\Models\Tenant;
 use App\Models\User;
@@ -63,5 +64,15 @@ class DatabaseSeeder extends Seeder
                     return fake()->dateTimeBetween($attributes['registered_at'], 'now');
                 },
             ]);
+
+        // Create some test appointments for the tenant
+        Appointment::factory()
+            ->count(10)
+            ->forTenant($tenant)
+            ->sequence(fn ($sequence) => [
+                'start_time' => now()->addDays(intdiv($sequence->index, 5))->setTime(9 + ($sequence->index % 5) * 2, 0),
+                'end_time' => now()->addDays(intdiv($sequence->index, 5))->setTime(9 + ($sequence->index % 5) * 2 + 2, 0),
+            ])
+            ->create();
     }
 }
