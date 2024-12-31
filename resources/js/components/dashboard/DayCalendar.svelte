@@ -64,7 +64,7 @@
             </div>
         {/each}
         <div
-            class="absolute w-full border-t-2 border-red-500 text-xs text-red-500 font-semibold"
+            class="absolute w-full border-t-2 border-red-500 text-xs text-red-500 font-semibold text-end"
             style="top: {(dayjs(props.now).hour() +
                 dayjs(props.now).minute() / 60) *
                 HOUR_BLOCK_HEIGHT_PX}px"
