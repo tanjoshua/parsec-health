@@ -31,7 +31,7 @@
     <div class="container mx-auto p-4">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <PatientVisits {activeVisits} {now} />
-            <DayCalendar {now} />
+            <DayCalendar {now} {appointments} />
         </div>
     </div>
 </BreezeAuthenticatedLayout>
