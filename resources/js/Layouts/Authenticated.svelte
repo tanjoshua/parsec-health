@@ -1,14 +1,11 @@
 <script>
     import * as Sidebar from "@/components/ui/sidebar";
     import AppSidebar from "@/components/shared/app-sidebar.svelte";
-    import BreezeApplicationLogo from "@/Components/ApplicationLogo.svelte";
     import BreezeDropdown from "@/Components/Dropdown.svelte";
     import BreezeDropdownLink from "@/Components/DropdownLink.svelte";
-    import BreezeResponsiveNavLink from "@/Components/ResponsiveNavLink.svelte";
     import { page, Link } from "@inertiajs/svelte";
     import { Separator } from "@/components/ui/separator";
     import * as Breadcrumb from "@/components/ui/breadcrumb";
-    let showingNavigationDropdown = false;
     export let user = $page.props.auth.user;
 </script>
 
