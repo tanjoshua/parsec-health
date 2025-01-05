@@ -9,5 +9,4 @@ export type Appointment = {
     notes?: string;
     created_at: string;
     updated_at: string;
-
 }

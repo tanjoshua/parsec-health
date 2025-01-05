@@ -1,16 +1,17 @@
-<script>
+<script lang="ts">
     import * as Sidebar from "@/components/ui/sidebar";
     import AppSidebar from "@/components/shared/app-sidebar.svelte";
     import BreezeDropdown from "@/Components/Dropdown.svelte";
     import BreezeDropdownLink from "@/Components/DropdownLink.svelte";
-    import { page, Link } from "@inertiajs/svelte";
-    import { Separator } from "@/components/ui/separator";
-    import * as Breadcrumb from "@/components/ui/breadcrumb";
-    export let user = $page.props.auth.user;
+    import { page } from "@inertiajs/svelte";
+    import type { Tenant } from "@/types/tenant";
+
+    let user = $page.props.auth.user;
+    let tenant = $page.props.tenant as Tenant;
 </script>
 
 <Sidebar.Provider>
-    <AppSidebar />
+    <AppSidebar {tenant} />
     <Sidebar.Inset>
         <div class="min-h-screen">
             <nav class="border-b">
