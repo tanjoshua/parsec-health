@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PatientController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('tenants/{tenant}')->name('tenants.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     });
+
+    Route::resource('tenants.patients', PatientController::class);
 });
 
 require __DIR__.'/auth.php';

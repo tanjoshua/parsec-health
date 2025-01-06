@@ -3,16 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patient;
+use App\Models\Tenant;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class PatientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Tenant $tenant)
     {
-        //
+        $patients = $tenant->patients()->paginate(10);
+
+        return Inertia::render('Patients', [
+            'tenant' => $tenant,
+            'patients' => $patients,
+        ]);
     }
 
     /**
