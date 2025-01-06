@@ -14,7 +14,7 @@ class PatientController extends Controller
      */
     public function index(Tenant $tenant)
     {
-        $patients = $tenant->patients()->paginate(10);
+        $patients = $tenant->patients()->paginate(10)->withQueryString();
 
         return Inertia::render('Patients', [
             'tenant' => $tenant,

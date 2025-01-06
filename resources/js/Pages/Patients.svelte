@@ -1,7 +1,9 @@
 <script lang="ts">
     import TenantLayout from "@/Layouts/TenantLayout.svelte";
+    import { PaginatedResult } from "@/types/pagination";
+    import { Patient } from "@/types/patient";
 
-    const { patients } = $props<{ patients: any }>();
+    const { patients } = $props<{ patients: PaginatedResult<Patient> }>();
     console.log(patients);
 </script>
 
