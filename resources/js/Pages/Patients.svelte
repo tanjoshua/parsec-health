@@ -3,8 +3,9 @@
     import { PaginatedResult } from "@/types/pagination";
     import { Patient } from "@/types/patient";
 
-    const { patients } = $props<{ patients: PaginatedResult<Patient> }>();
-    console.log(patients);
+    const { patients } = $props<{
+        patients: PaginatedResult<Patient>;
+    }>();
 </script>
 
 <svelte:head>

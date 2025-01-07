@@ -26,6 +26,7 @@
         "vite": "^6.0"
     },
     "dependencies": {
+        "@tanstack/table-core": "^8.20.5",
         "dayjs": "^1.11.13"
     }
 }
