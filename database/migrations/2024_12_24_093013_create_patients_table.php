@@ -21,6 +21,7 @@ return new class extends Migration
 
             // patient data
             $table->string('name');
+            $table->date('date_of_birth');
             // $table->string('identification');
 
             $table->unique(['tenant_id', 'tenant_patient_number']);

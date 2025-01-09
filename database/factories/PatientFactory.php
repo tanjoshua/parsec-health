@@ -22,6 +22,7 @@ class PatientFactory extends Factory
             'name' => fake()->name(),
             'tenant_id' => null,
             'tenant_patient_number' => null,
+            'date_of_birth' => fake()->dateTimeBetween('-100 years', '-15 years'),
         ];
     }
 

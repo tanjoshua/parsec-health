@@ -6,11 +6,14 @@
     import type { Tenant } from "@/types/tenant";
     import TenantLayout from "@/Layouts/TenantLayout.svelte";
 
-    const { activeVisits, appointments, tenant } = $props<{
+    const {
+        activeVisits,
+        appointments,
+    }: {
         activeVisits: Visit[];
         appointments: Appointment[];
         tenant: Tenant;
-    }>();
+    } = $props();
 
     // Add a reactive time value that updates every minute
     let now = $state(new Date());

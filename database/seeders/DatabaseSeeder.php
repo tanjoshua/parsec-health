@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
 
         // Create some test patients for the tenant
         $patients = Patient::factory()
-            ->count(10)
+            ->count(50)
             ->forTenant($tenant)
             ->create();
 
