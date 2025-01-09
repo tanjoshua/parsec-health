@@ -21,19 +21,25 @@
             title: "Visits",
             url: `/tenants/${props.tenant.id}/visits`,
             icon: Inbox,
-            isActive: $page.url === `/tenants/${props.tenant.id}/visits`,
+            isActive: $page.url.startsWith(
+                `/tenants/${props.tenant.id}/visits`,
+            ),
         },
         {
             title: "Appointments",
             url: `/tenants/${props.tenant.id}/appointments`,
             icon: Calendar,
-            isActive: $page.url === `/tenants/${props.tenant.id}/appointments`,
+            isActive: $page.url.startsWith(
+                `/tenants/${props.tenant.id}/appointments`,
+            ),
         },
         {
             title: "Patients",
             url: `/tenants/${props.tenant.id}/patients`,
             icon: Users,
-            isActive: $page.url === `/tenants/${props.tenant.id}/patients`,
+            isActive: $page.url.startsWith(
+                `/tenants/${props.tenant.id}/patients`,
+            ),
         },
     ];
 </script>
