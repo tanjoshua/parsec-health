@@ -12,13 +12,22 @@ class PatientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Tenant $tenant)
+    public function index(Tenant $tenant, Request $request)
     {
-        $patients = $tenant->patients()->paginate(10)->withQueryString();
+        $search = $request->input('search');
+        $pageSize = $request->input('pageSize', 10);
+        $patients = $tenant->patients()
+            ->when($search, function ($queryBuilder, $search) {
+                $queryBuilder->where('name', 'ilike', "%{$search}%");
+            })
+            ->paginate($pageSize)
+            ->withQueryString();
 
         return Inertia::render('Patients', [
             'tenant' => $tenant,
             'patients' => $patients,
+            'search' => $search,
+            'pageSize' => $pageSize,
         ]);
     }
 
