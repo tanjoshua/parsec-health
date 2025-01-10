@@ -17,7 +17,6 @@
 		ChevronsLeft,
 		ChevronsRight,
 	} from "lucide-svelte";
-	import { Input } from "../ui/input";
 	import { useForm } from "@inertiajs/svelte";
 	import SearchInput from "../ui/input/search-input.svelte";
 
@@ -28,10 +27,9 @@
 	}: {
 		patients: PaginatedResult<Patient>;
 		search: string;
-		pageSize: number;
+		pageSize: string;
 	} = $props();
 
-	console.log(patients);
 	const columns: ColumnDef<Patient>[] = [
 		{
 			accessorKey: "tenant_patient_number",
@@ -65,11 +63,22 @@
 
 	const form = useForm({
 		search: search,
+		pageSize: pageSize,
 	});
+
+	const onSubmit = () => {
+		$form
+			.transform((data) => ({
+				search: data.search ? data.search : undefined,
+				pageSize: data.pageSize == "10" ? undefined : data.pageSize,
+				page: 1,
+			}))
+			.get("");
+	};
 
 	const onSearch = (e: SubmitEvent) => {
 		e.preventDefault();
-		$form.get("");
+		onSubmit();
 	};
 </script>
 
@@ -83,7 +92,7 @@
 			bind:value={$form.search}
 			onCancel={() => {
 				$form.search = "";
-				$form.get("");
+				onSubmit();
 			}}
 		/>
 	</form>
@@ -143,10 +152,12 @@
 			<Select.Root
 				type="single"
 				name="pageSize"
-				disabled
-				value={pageSize.toString()}
+				bind:value={$form.pageSize}
+				onValueChange={onSubmit}
 			>
-				<Select.Trigger class="h-8 w-[70px]">{pageSize}</Select.Trigger>
+				<Select.Trigger class="h-8 w-[70px]"
+					>{$form.pageSize}</Select.Trigger
+				>
 				<Select.Content>
 					<Select.Item value="10">10</Select.Item>
 					<Select.Item value="20">20</Select.Item>
