@@ -18,6 +18,8 @@
 		ChevronsRight,
 	} from "lucide-svelte";
 	import { Input } from "../ui/input";
+	import { useForm } from "@inertiajs/svelte";
+	import SearchInput from "../ui/input/search-input.svelte";
 
 	let {
 		patients,
@@ -61,18 +63,30 @@
 		getCoreRowModel: getCoreRowModel(),
 	});
 
-	let searchQuery = $state(search);
+	const form = useForm({
+		search: search,
+	});
+
+	const onSearch = (e: SubmitEvent) => {
+		e.preventDefault();
+		$form.get("");
+	};
 </script>
 
 <div class="mb-4 flex justify-between">
-	<div>
-		<Input
+	<form onsubmit={onSearch}>
+		<SearchInput
+			name="search"
 			type="search"
 			placeholder="Search Patients"
 			class="max-w-xs"
-			bind:value={searchQuery}
+			bind:value={$form.search}
+			onCancel={() => {
+				$form.search = "";
+				$form.get("");
+			}}
 		/>
-	</div>
+	</form>
 </div>
 
 <div class="rounded-md border">
