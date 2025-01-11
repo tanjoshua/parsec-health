@@ -56,6 +56,12 @@
 					)}
 					({dayjs(visit.registered_at).from(props.now)})
 				</div>
+				{#if visit.left_at}
+					<div class="text-sm font-light">
+						Left: {formatRegistrationDate(visit.left_at, props.now)}
+						({dayjs(visit.left_at).from(props.now)})
+					</div>
+				{/if}
 
 				<div class="text-sm text-muted-foreground mt-2">
 					{visit.remarks}
