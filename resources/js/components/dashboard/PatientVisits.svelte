@@ -73,7 +73,7 @@
 
 <div>
 	<div class="flex justify-between items-center">
-		<h2 class="text-xl font-semibold mb-4">Patient Visits</h2>
+		<h2 class="text-2xl font-bold mb-4">Patient Visit Queue</h2>
 	</div>
 	<Tabs.Root value="active">
 		<Tabs.List class="grid w-full grid-cols-2">

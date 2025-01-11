@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tenant;
 use App\Models\Visit;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class VisitController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Tenant $tenant)
     {
-        //
+        return Inertia::render('Visits', [
+            'tenant' => $tenant,
+        ]);
     }
 
     /**

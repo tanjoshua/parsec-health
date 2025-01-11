@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\VisitController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +33,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::resource('tenants.patients', PatientController::class);
+    Route::resource('tenants.visits', VisitController::class);
+    Route::resource('tenants.appointments', AppointmentController::class);
 });
 
 require __DIR__.'/auth.php';

@@ -3,16 +3,13 @@
 	import TenantLayout from "@/Layouts/TenantLayout.svelte";
 	import type { PaginatedResult } from "@/types/pagination";
 	import type { Patient } from "@/types/patient";
-	import type { Tenant } from "@/types/tenant";
 
 	let {
 		patients,
-		tenant,
 		search,
 		pageSize,
 	}: {
 		patients: PaginatedResult<Patient>;
-		tenant: Tenant;
 		search: string;
 		pageSize: number;
 	} = $props();
@@ -28,7 +25,7 @@
 			<h2 class="text-2xl font-bold">Patients</h2>
 		</div>
 		<div>
-			<PatientTable {patients} {search} {pageSize} />
+			<PatientTable {patients} {search} pageSize={pageSize.toString()} />
 		</div>
 	</div>
 </TenantLayout>

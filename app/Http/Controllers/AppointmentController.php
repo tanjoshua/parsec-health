@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\Tenant;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class AppointmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Tenant $tenant)
     {
-        //
+        return Inertia::render("Appointments", [
+            'tenant' => $tenant
+        ]);
     }
 
     /**
