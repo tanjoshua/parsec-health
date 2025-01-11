@@ -1,13 +1,15 @@
 <script lang="ts">
 	import * as Sidebar from "@/components/ui/sidebar";
 	import AppSidebar from "@/components/shared/app-sidebar.svelte";
+	import * as DropdownMenu from "@/components/ui/dropdown-menu/index.js";
 	import BreezeDropdown from "@/Components/Dropdown.svelte";
 	import BreezeDropdownLink from "@/Components/DropdownLink.svelte";
-	import { page } from "@inertiajs/svelte";
+	import { Link, page } from "@inertiajs/svelte";
 	import type { Tenant } from "@/types/tenant";
+	import { ChevronDown, LogOut } from "lucide-svelte";
+	import { buttonVariants } from "@/components/ui/button";
 
 	let user = $page.props.auth.user;
-	let tenant = $page.props.tenant as Tenant;
 </script>
 
 <Sidebar.Provider>
@@ -41,47 +43,30 @@
 						</div>
 
 						<div class="flex items-center">
-							<!-- Settings Dropdown -->
-							<div class="ml-3 relative">
-								<BreezeDropdown
-									class="w-48 origin-top-right right-0"
+							<DropdownMenu.Root>
+								<DropdownMenu.Trigger
+									class={buttonVariants({ variant: "ghost" })}
 								>
-									<span
-										class="inline-flex rounded-md"
-										slot="trigger"
-									>
-										<button
-											type="button"
-											class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-										>
-											{user.name}
-
-											<svg
-												class="ml-2 -mr-0.5 h-4 w-4"
-												xmlns="http://www.w3.org/2000/svg"
-												viewBox="0 0 20 20"
-												fill="currentColor"
-											>
-												<path
-													fill-rule="evenodd"
-													d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-													clip-rule="evenodd"
-												/>
-											</svg>
-										</button>
-									</span>
-									<div slot="content">
-										<BreezeDropdownLink
+									<div>
+										{user.name}
+									</div>
+									<ChevronDown size={16} />
+								</DropdownMenu.Trigger>
+								<DropdownMenu.Content align="end">
+									<DropdownMenu.Item>
+										<Link
 											href="/logout"
 											method="post"
+											class="flex items-center space-x-2"
 											as="button"
 											type="button"
 										>
-											Log Out
-										</BreezeDropdownLink>
-									</div>
-								</BreezeDropdown>
-							</div>
+											<LogOut />
+											<div>Log Out</div>
+										</Link>
+									</DropdownMenu.Item>
+								</DropdownMenu.Content>
+							</DropdownMenu.Root>
 						</div>
 					</div>
 				</div>
