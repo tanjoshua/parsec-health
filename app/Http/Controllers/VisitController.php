@@ -12,10 +12,14 @@ class VisitController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Tenant $tenant)
+    public function index(Tenant $tenant, Request $request)
     {
+        $pageSize = $request->input('pageSize', 10);
+        $visits = $tenant->visits()->with('patient')->paginate($pageSize)->withQueryString();
         return Inertia::render('Visits', [
             'tenant' => $tenant,
+            'visits' => $visits,
+            'pageSize' => $pageSize
         ]);
     }
 
