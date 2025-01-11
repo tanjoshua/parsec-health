@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Patients | Parsec Health</title>
+	<title>Appointments | Parsec Health</title>
 </svelte:head>
 
 <TenantLayout>
