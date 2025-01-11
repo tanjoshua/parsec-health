@@ -19,6 +19,7 @@
 	} from "lucide-svelte";
 	import { useForm } from "@inertiajs/svelte";
 	import SearchInput from "../ui/input/search-input.svelte";
+	import PaginationBar from "../table/pagination-bar.svelte";
 
 	let {
 		patients,
@@ -142,73 +143,13 @@
 	</Table.Root>
 </div>
 
-<div class="flex items-center justify-between mt-4">
-	<div class="text-muted-foreground flex-1 text-sm">
-		<!-- {Object.keys($selectedDataIds).length} of {$rows.length} row(s) selected. -->
-	</div>
-	<div class="flex items-center space-x-6 lg:space-x-8">
-		<div class="flex items-center space-x-2">
-			<p class="text-sm font-medium">Rows per page</p>
-			<Select.Root
-				type="single"
-				name="pageSize"
-				bind:value={$form.pageSize}
-				onValueChange={onSubmit}
-			>
-				<Select.Trigger class="h-8 w-[70px]"
-					>{$form.pageSize}</Select.Trigger
-				>
-				<Select.Content>
-					<Select.Item value="10">10</Select.Item>
-					<Select.Item value="20">20</Select.Item>
-					<Select.Item value="30">30</Select.Item>
-					<Select.Item value="40">40</Select.Item>
-					<Select.Item value="50">50</Select.Item>
-				</Select.Content>
-			</Select.Root>
-		</div>
-		<div
-			class="flex w-[100px] items-center justify-center text-sm font-medium"
-		>
-			Page {patients.current_page} of {patients.last_page}
-		</div>
-		<div class="flex items-center space-x-2">
-			<Button
-				variant="outline"
-				class="hidden h-8 w-8 lg:flex"
-				disabled={!patients.prev_page_url}
-				href={patients.prev_page_url ? patients.first_page_url : ""}
-			>
-				<span class="sr-only">Go to first page</span>
-				<ChevronsLeft size={16} />
-			</Button>
-			<Button
-				variant="outline"
-				class="h-8 w-8"
-				disabled={!patients.prev_page_url}
-				href={patients.prev_page_url ? patients.prev_page_url : ""}
-			>
-				<span class="sr-only">Go to previous page</span>
-				<ChevronLeft size={16} />
-			</Button>
-			<Button
-				variant="outline"
-				class="h-8 w-8"
-				disabled={!patients.next_page_url}
-				href={patients.next_page_url ? patients.next_page_url : ""}
-			>
-				<span class="sr-only">Go to next page</span>
-				<ChevronRight size={16} />
-			</Button>
-			<Button
-				variant="outline"
-				class="hidden h-8 w-8 lg:flex"
-				disabled={!patients.next_page_url}
-				href={patients.next_page_url ? patients.last_page_url : ""}
-			>
-				<span class="sr-only">Go to last page</span>
-				<ChevronsRight size={16} />
-			</Button>
-		</div>
-	</div>
+<div class="mt-4">
+	<PaginationBar
+		pagination={patients}
+		pageSize={$form.pageSize}
+		onPageSizeChange={(value) => {
+			$form.pageSize = value;
+			onSubmit();
+		}}
+	/>
 </div>
