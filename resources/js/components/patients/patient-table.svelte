@@ -88,7 +88,7 @@
 			name="search"
 			type="search"
 			placeholder="Search Patients"
-			class="max-w-xs"
+			class=""
 			bind:value={$form.search}
 			onCancel={() => {
 				$form.search = "";

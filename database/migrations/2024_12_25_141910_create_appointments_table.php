@@ -26,8 +26,8 @@ return new class extends Migration
             $table->foreignId('patient_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('patient_name')->nullable();
 
-            $table->string('remarks')->nullable();
-            $table->string('notes')->nullable();
+            $table->text('remarks')->nullable();
+            $table->text('notes')->nullable();
         });
     }
 

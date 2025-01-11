@@ -25,8 +25,8 @@ return new class extends Migration
             $table->dateTime('registered_at');
             $table->dateTime('left_at')->nullable();
 
-            $table->string('remarks')->nullable();
-            $table->string('notes')->nullable();
+            $table->text('remarks')->nullable();
+            $table->text('notes')->nullable();
         });
     }
 

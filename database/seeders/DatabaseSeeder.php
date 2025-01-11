@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
 
         // Create some past visits from the last week
         Visit::factory()
-            ->count(10)
+            ->count(15)
             ->forTenant($tenant)
             ->sequence(fn ($sequence) => ['patient_id' => $patients[$sequence->index % count($patients)]->id])
             ->create([

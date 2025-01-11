@@ -18,11 +18,19 @@ class DashboardController extends Controller
             ->orderBy('registered_at', 'desc')
             ->get();
 
+        $completedVisits = $tenant->visits()
+            ->whereNotNull('left_at')
+            ->with('patient')
+            ->orderBy('left_at', 'desc')
+            ->take(11)
+            ->get();
+
         $appointments = $tenant->appointments()->get();
 
         return Inertia::render('Dashboard', [
             'tenant' => $tenant,
             'activeVisits' => $activeVisits,
+            'completedVisits' => $completedVisits,
             'appointments' => $appointments,
         ]);
     }
