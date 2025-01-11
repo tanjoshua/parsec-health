@@ -8,8 +8,14 @@
 	import type { Tenant } from "@/types/tenant";
 	import { ChevronDown, LogOut } from "lucide-svelte";
 	import { buttonVariants } from "@/components/ui/button";
+	import { Separator } from "@/components/ui/separator";
+	import type { Snippet } from "svelte";
 
 	let user = $page.props.auth.user;
+	let {
+		breadcrumbs,
+		children,
+	}: { breadcrumbs?: Snippet; children: Snippet } = $props();
 </script>
 
 <Sidebar.Provider>
@@ -22,24 +28,10 @@
 					<div class="flex justify-between h-16">
 						<div class="flex items-center gap-4">
 							<Sidebar.Trigger />
-							<!-- <Separator orientation="vertical" class=" " />
-                            <Breadcrumb.Root>
-                                <Breadcrumb.List>
-                                    <Breadcrumb.Item class="hidden md:block">
-                                        <Breadcrumb.Link href="#"
-                                            >Building Your Application</Breadcrumb.Link
-                                        >
-                                    </Breadcrumb.Item>
-                                    <Breadcrumb.Separator
-                                        class="hidden md:block"
-                                    />
-                                    <Breadcrumb.Item>
-                                        <Breadcrumb.Page
-                                            >Data Fetching</Breadcrumb.Page
-                                        >
-                                    </Breadcrumb.Item>
-                                </Breadcrumb.List>
-                            </Breadcrumb.Root> -->
+							{#if breadcrumbs}
+								<Separator orientation="vertical" class=" " />
+								{@render breadcrumbs()}
+							{/if}
 						</div>
 
 						<div class="flex items-center">
@@ -74,7 +66,7 @@
 
 			<!-- Page Content -->
 			<main>
-				<slot />
+				{@render children()}
 			</main>
 		</div>
 	</Sidebar.Inset>

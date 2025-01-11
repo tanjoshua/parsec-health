@@ -3,11 +3,12 @@
 	import type { Snippet } from "svelte";
 	import type { WithElementRef } from "bits-ui";
 	import { cn } from "@/utils.js";
+	import { Link } from "@inertiajs/svelte";
 
 	let {
 		ref = $bindable(null),
 		class: className,
-		href = undefined,
+		href = "",
 		child,
 		children,
 		...restProps
@@ -25,7 +26,7 @@
 {#if child}
 	{@render child({ props: attrs })}
 {:else}
-	<a bind:this={ref} {...attrs}>
+	<Link href={href as string}>
 		{@render children?.()}
-	</a>
+	</Link>
 {/if}

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import PatientVisits from "@/components/dashboard/PatientVisits.svelte";
 	import DayCalendar from "@/components/dashboard/DayCalendar.svelte";
+	import * as Breadcrumb from "@/components/ui/breadcrumb";
 	import type { Visit } from "@/types/visit";
 	import type { Appointment } from "@/types/appointment";
 	import type { Tenant } from "@/types/tenant";
@@ -10,6 +11,7 @@
 		activeVisits,
 		completedVisits,
 		appointments,
+		tenant,
 	}: {
 		activeVisits: Visit[];
 		completedVisits: Visit[];
@@ -34,6 +36,21 @@
 </svelte:head>
 
 <TenantLayout>
+	{#snippet breadcrumbs()}
+		<Breadcrumb.Root>
+			<Breadcrumb.List>
+				<Breadcrumb.Item class="hidden md:block">
+					<Breadcrumb.Link href={route("tenants.dashboard", tenant)}
+						>{tenant.name}</Breadcrumb.Link
+					>
+				</Breadcrumb.Item>
+				<Breadcrumb.Separator class="hidden md:block" />
+				<Breadcrumb.Item>
+					<Breadcrumb.Page>Dashboard</Breadcrumb.Page>
+				</Breadcrumb.Item>
+			</Breadcrumb.List>
+		</Breadcrumb.Root>
+	{/snippet}
 	<div class="container mx-auto p-4">
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 			<PatientVisits {activeVisits} {completedVisits} {now} />
