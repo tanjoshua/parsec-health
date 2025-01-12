@@ -1,22 +1,8 @@
 <script lang="ts">
-	import { type ColumnDef, getCoreRowModel } from "@tanstack/table-core";
-	import {
-		createSvelteTable,
-		FlexRender,
-		renderComponent,
-	} from "@/components/ui/data-table";
 	import * as Table from "@/components/ui/table";
-	import * as Select from "@/components/ui/select";
-	import { Button } from "@/components/ui/button";
 	import type { Patient } from "@/types/patient";
 	import type { PaginatedResult } from "@/types/pagination";
 	import PatientTableActions from "./patient-table-actions.svelte";
-	import {
-		ChevronLeft,
-		ChevronRight,
-		ChevronsLeft,
-		ChevronsRight,
-	} from "lucide-svelte";
 	import { useForm } from "@inertiajs/svelte";
 	import SearchInput from "../ui/input/search-input.svelte";
 	import PaginationBar from "../table/pagination-bar.svelte";
@@ -30,37 +16,6 @@
 		search: string;
 		pageSize: string;
 	} = $props();
-
-	const columns: ColumnDef<Patient>[] = [
-		{
-			accessorKey: "tenant_patient_number",
-			header: "Patient Number",
-		},
-		{
-			accessorKey: "name",
-			header: "Patient Name",
-		},
-		{
-			accessorKey: "date_of_birth",
-			header: "Date of Birth",
-		},
-		{
-			id: "actions",
-			cell: ({ row }) => {
-				return renderComponent(PatientTableActions, {
-					id: row.original.id.toString(),
-				});
-			},
-		},
-	];
-
-	const table = createSvelteTable({
-		get data() {
-			return patients.data;
-		},
-		columns,
-		getCoreRowModel: getCoreRowModel(),
-	});
 
 	const form = useForm({
 		search: search,
@@ -102,39 +57,32 @@
 <div class="rounded-md border">
 	<Table.Root>
 		<Table.Header>
-			{#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
-				<Table.Row>
-					{#each headerGroup.headers as header (header.id)}
-						<Table.Head>
-							{#if !header.isPlaceholder}
-								<FlexRender
-									content={header.column.columnDef.header}
-									context={header.getContext()}
-								/>
-							{/if}
-						</Table.Head>
-					{/each}
-				</Table.Row>
-			{/each}
+			<Table.Row>
+				<Table.Head>Patient Number</Table.Head>
+				<Table.Head>Name</Table.Head>
+				<Table.Head>Date of Birth</Table.Head>
+				<Table.Head></Table.Head>
+			</Table.Row>
 		</Table.Header>
 		<Table.Body>
-			{#each table.getRowModel().rows as row (row.id)}
-				<Table.Row data-state={row.getIsSelected() && "selected"}>
-					{#each row.getVisibleCells() as cell (cell.id)}
-						<Table.Cell>
-							<FlexRender
-								content={cell.column.columnDef.cell}
-								context={cell.getContext()}
-							/>
-						</Table.Cell>
-					{/each}
+			{#each patients.data as patient (patient.id)}
+				<Table.Row>
+					<Table.Cell class="w-[200px]">
+						{patient.tenant_patient_number
+							.toString()
+							.padStart(4, "0")}
+					</Table.Cell>
+					<Table.Cell class="font-medium">
+						{patient.name}
+					</Table.Cell>
+					<Table.Cell>{patient.date_of_birth}</Table.Cell>
+					<Table.Cell>
+						<PatientTableActions id={patient.id.toString()} />
+					</Table.Cell>
 				</Table.Row>
 			{:else}
 				<Table.Row>
-					<Table.Cell
-						colspan={columns.length}
-						class="h-24 text-center"
-					>
+					<Table.Cell colspan={4} class="h-24 text-center">
 						No results.
 					</Table.Cell>
 				</Table.Row>
