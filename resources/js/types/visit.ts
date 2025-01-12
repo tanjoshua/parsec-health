@@ -1,4 +1,5 @@
 export type Visit = {
+    id: number;
     patient: {
         id: string;
         tenant_patient_number: number;

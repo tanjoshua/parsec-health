@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { Card, CardContent } from "@/components/ui/card";
 	import * as Tabs from "@/components/ui/tabs/index";
 	import dayjs from "dayjs";
 	import relativeTime from "dayjs/plugin/relativeTime";
@@ -8,6 +7,7 @@
 	import { Button } from "../ui/button";
 	import { page } from "@inertiajs/svelte";
 	import type { Tenant } from "@/types/tenant";
+	import { cn } from "@/utils";
 
 	dayjs.extend(relativeTime);
 
@@ -37,37 +37,52 @@
 
 {#snippet visitCard(visit: Visit)}
 	<div>
-		<Card
-			class="cursor-pointer hover:shadow-md transition-shadow"
+		<button
+			class={cn(
+				"hover:bg-accent flex flex-col gap-2 rounded-lg border p-3 text-left w-full",
+				selectedVisit?.id === visit.id && "bg-muted",
+			)}
 			onclick={() => {
 				selectedVisit = visit;
 				visitDrawerOpen = true;
 			}}
 		>
-			<CardContent>
-				<div class="font-medium">
-					#{visit.patient.tenant_patient_number} - {visit.patient
-						.name}
+			<div class="flex w-full flex-col gap-1">
+				<div class="flex items-center">
+					<div class="flex items-center gap-2">
+						<div class="font-semibold">
+							#{visit.patient.tenant_patient_number} - {visit
+								.patient.name}
+						</div>
+						<!-- {#if true}
+							<span
+								class="flex h-2 w-2 rounded-full bg-blue-600"
+							/>
+						{/if} -->
+					</div>
+					<div
+						class={cn(
+							"ml-auto text-xs",
+							selectedVisit?.id === visit.id
+								? "text-foreground"
+								: "text-muted-foreground",
+						)}
+					>
+						{dayjs(visit.left_at).from(props.now)}
+					</div>
 				</div>
-				<div class="text-sm font-light">
+				<div class="text-xs font-medium">
 					Registered: {formatRegistrationDate(
 						visit.registered_at,
 						props.now,
 					)}
-					({dayjs(visit.registered_at).from(props.now)})
 				</div>
-				{#if visit.left_at}
-					<div class="text-sm font-light">
-						Left: {formatRegistrationDate(visit.left_at, props.now)}
-						({dayjs(visit.left_at).from(props.now)})
-					</div>
-				{/if}
-
-				<div class="text-sm text-muted-foreground mt-2">
-					{visit.remarks}
-				</div>
-			</CardContent>
-		</Card>
+			</div>
+			<div class="text-muted-foreground line-clamp-2 text-xs">
+				<!-- {item.text.substring(0, 300)} -->
+				{visit.remarks}
+			</div>
+		</button>
 	</div>
 {/snippet}
 
