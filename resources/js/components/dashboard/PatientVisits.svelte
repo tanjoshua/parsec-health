@@ -7,6 +7,7 @@
 	import { page } from "@inertiajs/svelte";
 	import type { Tenant } from "@/types/tenant";
 	import { cn } from "@/utils";
+	import ScrollArea from "../ui/scroll-area/scroll-area.svelte";
 
 	dayjs.extend(relativeTime);
 
@@ -96,25 +97,34 @@
 				</Tabs.List>
 			</div>
 		</div>
-		<Tabs.Content value="active" class="mt-4 space-y-4">
-			{#each props.activeVisits as visit}
-				{@render visitCard(visit)}
-			{/each}
-		</Tabs.Content>
-		<Tabs.Content value="completed" class="mt-4 space-y-4">
-			{#each props.completedVisits.slice(0, 10) as completedVisit}
-				{@render visitCard(completedVisit)}
-			{/each}
-			{#if props.completedVisits.length > 10}
-				<div class="flex">
-					<Button
-						variant="outline"
-						size="sm"
-						class="w-full"
-						href={`/tenants/${tenant.id}/visits`}>See all</Button
-					>
+		<Tabs.Content value="active">
+			<ScrollArea class="h-screen">
+				<div class="mt-4 space-y-4">
+					{#each props.activeVisits as visit}
+						{@render visitCard(visit)}
+					{/each}
 				</div>
-			{/if}
+			</ScrollArea>
+		</Tabs.Content>
+		<Tabs.Content value="completed">
+			<ScrollArea class="h-screen">
+				<div class="mt-4 space-y-4">
+					{#each props.completedVisits.slice(0, 10) as completedVisit}
+						{@render visitCard(completedVisit)}
+					{/each}
+					{#if props.completedVisits.length > 10}
+						<div class="flex">
+							<Button
+								variant="outline"
+								size="sm"
+								class="w-full"
+								href={`/tenants/${tenant.id}/visits`}
+								>See all</Button
+							>
+						</div>
+					{/if}
+				</div>
+			</ScrollArea>
 		</Tabs.Content>
 	</Tabs.Root>
 </div>
