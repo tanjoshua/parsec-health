@@ -87,14 +87,16 @@
 {/snippet}
 
 <div>
-	<div class="flex justify-between items-center">
-		<h2 class="text-2xl font-bold mb-4">Patient Visit Queue</h2>
-	</div>
 	<Tabs.Root value="active">
-		<Tabs.List class="grid w-full grid-cols-2">
-			<Tabs.Trigger value="active">Active</Tabs.Trigger>
-			<Tabs.Trigger value="completed">Completed</Tabs.Trigger>
-		</Tabs.List>
+		<div class="flex justify-between items-center">
+			<h2 class="text-xl font-bold">Patient Visit Queue</h2>
+			<div>
+				<Tabs.List class="grid grid-cols-2">
+					<Tabs.Trigger value="active">Active</Tabs.Trigger>
+					<Tabs.Trigger value="completed">Completed</Tabs.Trigger>
+				</Tabs.List>
+			</div>
+		</div>
 		<Tabs.Content value="active" class="mt-4 space-y-4">
 			{#each props.activeVisits as visit}
 				{@render visitCard(visit)}
@@ -116,7 +118,6 @@
 			{/if}
 		</Tabs.Content>
 	</Tabs.Root>
-
 	<Sheet.Root
 		open={visitDrawerOpen}
 		onOpenChange={(open) => {
