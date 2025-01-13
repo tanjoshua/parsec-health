@@ -6,6 +6,7 @@
 	import type { Appointment } from "@/types/appointment";
 	import type { Tenant } from "@/types/tenant";
 	import TenantLayout from "@/Layouts/TenantLayout.svelte";
+	import SelectedPatient from "@/components/dashboard/SelectedPatient.svelte";
 
 	const {
 		activeVisits,
@@ -25,10 +26,12 @@
 	$effect(() => {
 		const interval = setInterval(() => {
 			now = new Date();
-		}, 60000); // Update every minute
+		}, 1000); // Update every second
 
 		return () => clearInterval(interval); // Cleanup on component destroy
 	});
+
+	let selectedVisit = $state<Visit | null>(null);
 </script>
 
 <svelte:head>
@@ -53,8 +56,14 @@
 	{/snippet}
 	<div class="container mx-auto p-4">
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-			<PatientVisits {activeVisits} {completedVisits} {now} />
-			<DayCalendar {now} {appointments} />
+			<PatientVisits
+				{activeVisits}
+				{completedVisits}
+				{now}
+				bind:selectedVisit
+			/>
+			<!-- <DayCalendar {now} {appointments} /> -->
+			<SelectedPatient {now} bind:selectedVisit />
 		</div>
 	</div>
 </TenantLayout>
