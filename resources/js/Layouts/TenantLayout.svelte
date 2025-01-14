@@ -21,7 +21,7 @@
 <Sidebar.Provider>
 	<AppSidebar />
 	<Sidebar.Inset>
-		<div class="min-h-screen">
+		<div class="flex flex-col h-screen">
 			<nav class="border-b">
 				<!-- Primary Navigation Menu -->
 				<div class="px-4">
@@ -65,7 +65,7 @@
 			</nav>
 
 			<!-- Page Content -->
-			<main>
+			<main class="flex-1">
 				{@render children()}
 			</main>
 		</div>

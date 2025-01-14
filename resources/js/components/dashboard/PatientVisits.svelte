@@ -98,7 +98,7 @@
 			</div>
 		</div>
 		<Tabs.Content value="active">
-			<ScrollArea class="h-screen">
+			<ScrollArea class="h-[calc(100vh-9rem)]">
 				<div class="mt-4 space-y-4">
 					{#each props.activeVisits as visit}
 						{@render visitCard(visit)}
@@ -107,7 +107,7 @@
 			</ScrollArea>
 		</Tabs.Content>
 		<Tabs.Content value="completed">
-			<ScrollArea class="h-screen">
+			<ScrollArea class="h-[calc(100vh-9rem)]">
 				<div class="mt-4 space-y-4">
 					{#each props.completedVisits.slice(0, 10) as completedVisit}
 						{@render visitCard(completedVisit)}
