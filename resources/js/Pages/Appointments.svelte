@@ -3,17 +3,36 @@
 	import * as Breadcrumb from "@/components/ui/breadcrumb";
 	import { Button } from "@/components/ui/button";
 	import Calendar from "@/components/ui/calendar/calendar.svelte";
-	import { ScrollArea } from "@/components/ui/scroll-area";
 	import type { Tenant } from "@/types/tenant";
 	import { Plus } from "lucide-svelte";
-	import { getLocalTimeZone, today } from "@internationalized/date";
+	import {
+		type DateValue,
+		getLocalTimeZone,
+		parseDate,
+		today,
+	} from "@internationalized/date";
 	import dayjs from "dayjs";
+	import { router } from "@inertiajs/svelte";
 
-	let { tenant }: { tenant: Tenant } = $props();
-	let selectedDay = $state(today(getLocalTimeZone()));
-	let selectedDayDate = $derived(
-		dayjs(selectedDay.toDate(getLocalTimeZone())),
-	);
+	let {
+		tenant,
+		selectedDay: selectedDayProp,
+	}: { tenant: Tenant; selectedDay?: string } = $props();
+	let selectedDay = selectedDayProp
+		? parseDate(selectedDayProp)
+		: today(getLocalTimeZone());
+	let selectedDayDate = dayjs(selectedDay.toDate(getLocalTimeZone()));
+
+	const onDayChange = (day?: DateValue) => {
+		if (day) {
+			router.visit("", {
+				only: ["selectedDay", "appointments"],
+				data: {
+					day: day.toString(),
+				},
+			});
+		}
+	};
 </script>
 
 <svelte:head>
@@ -43,7 +62,11 @@
 					<Plus />
 					Create Appointment
 				</Button>
-				<Calendar type="single" bind:value={selectedDay} />
+				<Calendar
+					type="single"
+					value={selectedDay}
+					onValueChange={onDayChange}
+				/>
 			</div>
 			<div class="flex-1 border rounded-md p-4">
 				<div class="text-xl font-bold">

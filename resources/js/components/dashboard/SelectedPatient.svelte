@@ -8,7 +8,6 @@
 		now: Date;
 		selectedVisit: Visit | null;
 	} = $props();
-	console.log(selectedVisit);
 </script>
 
 <div class="rounded-md border h-full">

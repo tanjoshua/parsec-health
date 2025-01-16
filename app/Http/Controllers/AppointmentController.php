@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\Tenant;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -12,10 +13,15 @@ class AppointmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Tenant $tenant)
+    public function index(Tenant $tenant, Request $request)
     {
+        $selectedDay = $request->input('day') ?? null;
+        $appointments = [];
+
         return Inertia::render("Appointments", [
-            'tenant' => $tenant
+            'tenant' => $tenant,
+            'selectedDay' => $selectedDay,
+            'appointments' => $appointments,
         ]);
     }
 
