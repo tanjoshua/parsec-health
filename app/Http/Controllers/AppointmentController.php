@@ -15,8 +15,16 @@ class AppointmentController extends Controller
      */
     public function index(Tenant $tenant, Request $request)
     {
-        $selectedDay = $request->input('day') ?? null;
-        $appointments = [];
+        $selectedDay = $request->input('day') ?? Carbon::today()->format('Y-m-d');
+        $startOfDay = Carbon::createFromFormat('Y-m-d', $selectedDay)->startOfDay();
+        $endOfDay = Carbon::createFromFormat('Y-m-d', $selectedDay)->endOfDay();
+
+        $appointments = $tenant->appointments()
+            ->where(function ($query) use ($startOfDay, $endOfDay) {
+                $query->whereBetween('start_time', [$startOfDay, $endOfDay])
+                    ->orWhereBetween('end_time', [$startOfDay, $endOfDay]);
+            })
+            ->get();
 
         return Inertia::render("Appointments", [
             'tenant' => $tenant,

@@ -13,11 +13,21 @@
 	} from "@internationalized/date";
 	import dayjs from "dayjs";
 	import { router } from "@inertiajs/svelte";
+	import type { Appointment } from "@/types/appointment";
+	import ScrollArea from "@/components/ui/scroll-area/scroll-area.svelte";
+	import { cn } from "@/utils";
 
 	let {
 		tenant,
 		selectedDay: selectedDayProp,
-	}: { tenant: Tenant; selectedDay?: string } = $props();
+		appointments,
+	}: {
+		tenant: Tenant;
+		selectedDay?: string;
+		appointments: Appointment[];
+	} = $props();
+	console.log(appointments);
+
 	let selectedDay = selectedDayProp
 		? parseDate(selectedDayProp)
 		: today(getLocalTimeZone());
@@ -38,6 +48,35 @@
 <svelte:head>
 	<title>Appointments | Parsec Health</title>
 </svelte:head>
+
+{#snippet appointmentCard(appointment: Appointment)}
+	<div>
+		<button
+			class={cn(
+				"hover:bg-accent flex flex-col gap-2 rounded-lg border p-3 text-left w-full",
+			)}
+		>
+			<div class="flex w-full flex-col gap-1">
+				<div class="flex items-start">
+					<div>
+						<div class="text-sm text-muted-foreground">
+							{`${dayjs(appointment.start_time).format("HH:mm")} - ${dayjs(appointment.end_time).format("HH:mm")}`}
+						</div>
+						<div class="font-semibold">
+							{appointment.patient_name}
+						</div>
+					</div>
+
+					<div class={cn("ml-auto text-xs")}></div>
+				</div>
+				<div class="text-xs font-medium">Some more info</div>
+			</div>
+			<div class="text-muted-foreground line-clamp-2 text-xs">
+				{appointment.remarks}
+			</div>
+		</button>
+	</div>
+{/snippet}
 
 <TenantLayout>
 	{#snippet breadcrumbs()}
@@ -68,11 +107,19 @@
 					onValueChange={onDayChange}
 				/>
 			</div>
-			<div class="flex-1 border rounded-md p-4">
-				<div class="text-xl font-bold">
-					{selectedDayDate.format("D MMMM YYYY, dddd")}
+			<ScrollArea
+				class="flex-1 border rounded-md p-4 h-[calc(100vh-6rem)] "
+			>
+				<div class="grid gap-4">
+					<div class="text-xl font-bold">
+						{selectedDayDate.format("D MMMM YYYY, dddd")}
+					</div>
+
+					{#each appointments as appointment (appointment.id)}
+						{@render appointmentCard(appointment)}
+					{/each}
 				</div>
-			</div>
+			</ScrollArea>
 		</div>
 	</div>
 </TenantLayout>

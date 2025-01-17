@@ -1,4 +1,5 @@
 export type Appointment = {
+    id: string;
     start_time: string;
     end_time: string;
 

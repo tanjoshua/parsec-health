@@ -65,13 +65,13 @@ class DatabaseSeeder extends Seeder
                 },
             ]);
 
-        // Create some test appointments for the tenant
+        // Create a lot of test appointments for the tenant
         Appointment::factory()
-            ->count(10)
+            ->count(150)
             ->forTenant($tenant)
             ->sequence(fn ($sequence) => [
-                'start_time' => now()->addDays(intdiv($sequence->index, 5))->setTime(9 + ($sequence->index % 5) * 2, 0),
-                'end_time' => now()->addDays(intdiv($sequence->index, 5))->setTime(9 + ($sequence->index % 5) * 2 + 2, 0),
+                'start_time' => now()->addHours(intdiv($sequence->index, 15))->addMinutes($sequence->index % 15 * 30),
+                'end_time' => now()->addHours(intdiv($sequence->index, 15))->addMinutes($sequence->index % 15 * 30 + 30),
             ])
             ->create();
     }
