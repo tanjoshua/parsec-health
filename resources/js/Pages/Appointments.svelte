@@ -15,7 +15,7 @@
 	import { router } from "@inertiajs/svelte";
 	import type { Appointment } from "@/types/appointment";
 	import ScrollArea from "@/components/ui/scroll-area/scroll-area.svelte";
-	import { cn } from "@/utils";
+	import AppointmentCard from "@/components/appointments/appointment-card.svelte";
 
 	let {
 		tenant,
@@ -48,35 +48,6 @@
 <svelte:head>
 	<title>Appointments | Parsec Health</title>
 </svelte:head>
-
-{#snippet appointmentCard(appointment: Appointment)}
-	<div>
-		<button
-			class={cn(
-				"hover:bg-accent flex flex-col gap-2 rounded-lg border p-3 text-left w-full",
-			)}
-		>
-			<div class="flex w-full flex-col gap-1">
-				<div class="flex items-start">
-					<div>
-						<div class="text-sm text-muted-foreground">
-							{`${dayjs(appointment.start_time).format("HH:mm")} - ${dayjs(appointment.end_time).format("HH:mm")}`}
-						</div>
-						<div class="font-semibold">
-							{appointment.patient_name}
-						</div>
-					</div>
-
-					<div class={cn("ml-auto text-xs")}></div>
-				</div>
-				<div class="text-xs font-medium">Some more info</div>
-			</div>
-			<div class="text-muted-foreground line-clamp-2 text-xs">
-				{appointment.remarks}
-			</div>
-		</button>
-	</div>
-{/snippet}
 
 <TenantLayout>
 	{#snippet breadcrumbs()}
@@ -116,7 +87,7 @@
 					</div>
 
 					{#each appointments as appointment (appointment.id)}
-						{@render appointmentCard(appointment)}
+						<AppointmentCard {appointment} />
 					{/each}
 				</div>
 			</ScrollArea>
