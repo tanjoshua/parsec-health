@@ -1,5 +1,6 @@
 <script lang="ts">
 	import TenantLayout from "@/Layouts/TenantLayout.svelte";
+	import * as Tabs from "@/components/ui/tabs/index";
 	import * as Breadcrumb from "@/components/ui/breadcrumb";
 	import { Button } from "@/components/ui/button";
 	import Calendar from "@/components/ui/calendar/calendar.svelte";
@@ -67,8 +68,15 @@
 		</Breadcrumb.Root>
 	{/snippet}
 	<div class="container mx-auto p-4 h-full">
-		<AppointmentHeader {tenant} page="upcoming" />
+		<AppointmentHeader {tenant} page="calendar" />
 		<div class="mt-4 flex space-x-4">
+			<div class="">
+				<Calendar
+					type="single"
+					value={selectedDay}
+					onValueChange={onDayChange}
+				/>
+			</div>
 			<ScrollArea
 				class="flex-1 border rounded-md p-4 h-[calc(100vh-10rem)] "
 			>

@@ -20,54 +20,52 @@
 
 <Sidebar.Provider>
 	<AppSidebar />
-	<Sidebar.Inset>
-		<div class="flex flex-col h-screen">
-			<nav class="border-b">
-				<!-- Primary Navigation Menu -->
-				<div class="px-4">
-					<div class="flex justify-between h-16">
-						<div class="flex items-center gap-4">
-							<Sidebar.Trigger />
-							{#if breadcrumbs}
-								<Separator orientation="vertical" class=" " />
-								{@render breadcrumbs()}
-							{/if}
-						</div>
+	<Sidebar.Inset class="h-screen">
+		<nav class="border-b">
+			<!-- Primary Navigation Menu -->
+			<div class="px-4">
+				<div class="flex justify-between h-16">
+					<div class="flex items-center gap-4">
+						<Sidebar.Trigger />
+						{#if breadcrumbs}
+							<Separator orientation="vertical" class=" " />
+							{@render breadcrumbs()}
+						{/if}
+					</div>
 
-						<div class="flex items-center">
-							<DropdownMenu.Root>
-								<DropdownMenu.Trigger
-									class={buttonVariants({ variant: "ghost" })}
-								>
-									<div>
-										{user.name}
-									</div>
-									<ChevronDown size={16} />
-								</DropdownMenu.Trigger>
-								<DropdownMenu.Content align="end">
-									<DropdownMenu.Item>
-										<Link
-											href="/logout"
-											method="post"
-											class="flex items-center space-x-2"
-											as="button"
-											type="button"
-										>
-											<LogOut />
-											<div>Log Out</div>
-										</Link>
-									</DropdownMenu.Item>
-								</DropdownMenu.Content>
-							</DropdownMenu.Root>
-						</div>
+					<div class="flex items-center">
+						<DropdownMenu.Root>
+							<DropdownMenu.Trigger
+								class={buttonVariants({ variant: "ghost" })}
+							>
+								<div>
+									{user.name}
+								</div>
+								<ChevronDown size={16} />
+							</DropdownMenu.Trigger>
+							<DropdownMenu.Content align="end">
+								<DropdownMenu.Item>
+									<Link
+										href="/logout"
+										method="post"
+										class="flex items-center space-x-2"
+										as="button"
+										type="button"
+									>
+										<LogOut />
+										<div>Log Out</div>
+									</Link>
+								</DropdownMenu.Item>
+							</DropdownMenu.Content>
+						</DropdownMenu.Root>
 					</div>
 				</div>
-			</nav>
+			</div>
+		</nav>
 
-			<!-- Page Content -->
-			<main class="flex-1">
-				{@render children()}
-			</main>
-		</div>
+		<!-- Page Content -->
+		<main class="flex-1">
+			{@render children()}
+		</main>
 	</Sidebar.Inset>
 </Sidebar.Provider>

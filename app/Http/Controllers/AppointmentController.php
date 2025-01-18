@@ -34,6 +34,29 @@ class AppointmentController extends Controller
     }
 
     /**
+     * Display appointments in calendar.
+     */
+    public function calendar(Tenant $tenant, Request $request)
+    {
+        $selectedDay = $request->input('day') ?? Carbon::today()->format('Y-m-d');
+        $startOfDay = Carbon::createFromFormat('Y-m-d', $selectedDay)->startOfDay();
+        $endOfDay = Carbon::createFromFormat('Y-m-d', $selectedDay)->endOfDay();
+
+        $appointments = $tenant->appointments()
+            ->where(function ($query) use ($startOfDay, $endOfDay) {
+                $query->whereBetween('start_time', [$startOfDay, $endOfDay])
+                    ->orWhereBetween('end_time', [$startOfDay, $endOfDay]);
+            })
+            ->get();
+
+        return Inertia::render("AppointmentsCalendar", [
+            'tenant' => $tenant,
+            'selectedDay' => $selectedDay,
+            'appointments' => $appointments,
+        ]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()

@@ -34,6 +34,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('tenants.patients', PatientController::class);
     Route::resource('tenants.visits', VisitController::class);
+
+    Route::get('tenants/{tenant}/appointments/calendar', [AppointmentController::class, 'calendar'])->name('tenants.appointments.calendar');
     Route::resource('tenants.appointments', AppointmentController::class);
 });
 
