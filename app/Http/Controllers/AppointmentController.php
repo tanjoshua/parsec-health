@@ -15,21 +15,17 @@ class AppointmentController extends Controller
      */
     public function index(Tenant $tenant, Request $request)
     {
-        $selectedDay = $request->input('day') ?? Carbon::today()->format('Y-m-d');
-        $startOfDay = Carbon::createFromFormat('Y-m-d', $selectedDay)->startOfDay();
-        $endOfDay = Carbon::createFromFormat('Y-m-d', $selectedDay)->endOfDay();
-
+        $pageSize = $request->input('pageSize', 10);
         $appointments = $tenant->appointments()
-            ->where(function ($query) use ($startOfDay, $endOfDay) {
-                $query->whereBetween('start_time', [$startOfDay, $endOfDay])
-                    ->orWhereBetween('end_time', [$startOfDay, $endOfDay]);
-            })
-            ->get();
+            ->where('end_time', '>=', Carbon::today())
+            ->orderBy('start_time')
+            ->paginate($pageSize)
+            ->withQueryString();
 
         return Inertia::render("Appointments", [
             'tenant' => $tenant,
-            'selectedDay' => $selectedDay,
             'appointments' => $appointments,
+            'pageSize' => $pageSize
         ]);
     }
 

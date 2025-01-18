@@ -2,10 +2,7 @@
 	import * as Sidebar from "@/components/ui/sidebar";
 	import AppSidebar from "@/components/shared/app-sidebar.svelte";
 	import * as DropdownMenu from "@/components/ui/dropdown-menu/index.js";
-	import BreezeDropdown from "@/Components/Dropdown.svelte";
-	import BreezeDropdownLink from "@/Components/DropdownLink.svelte";
 	import { Link, page } from "@inertiajs/svelte";
-	import type { Tenant } from "@/types/tenant";
 	import { ChevronDown, LogOut } from "lucide-svelte";
 	import { buttonVariants } from "@/components/ui/button";
 	import { Separator } from "@/components/ui/separator";
