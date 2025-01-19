@@ -9,6 +9,7 @@
 	import type { PaginatedResult } from "@/types/pagination";
 	import PaginationBar from "@/components/table/pagination-bar.svelte";
 	import { router } from "@inertiajs/svelte";
+	import { CalendarIcon } from "lucide-svelte";
 
 	let {
 		tenant,
@@ -44,21 +45,36 @@
 	{/snippet}
 	<div class="container mx-auto p-4 h-full">
 		<AppointmentHeader {tenant} page="upcoming" />
-		<div class="mt-4">
-			<div class="grid gap-4">
-				{#each appointments.data as appointment (appointment.id)}
-					<AppointmentCard {appointment} />
-				{/each}
+		{#if appointments.data.length > 0}
+			<div class="mt-4">
+				<div class="grid gap-4">
+					{#each appointments.data as appointment (appointment.id)}
+						<AppointmentCard {appointment} />
+					{/each}
+				</div>
 			</div>
-		</div>
-		<div class="mt-4">
-			<PaginationBar
-				pagination={appointments}
-				{pageSize}
-				onPageSizeChange={(value) => {
-					router.visit("", { data: { pageSize: value } });
-				}}
-			/>
-		</div>
+			<div class="mt-4">
+				<PaginationBar
+					pagination={appointments}
+					{pageSize}
+					onPageSizeChange={(value) => {
+						router.visit("", { data: { pageSize: value } });
+					}}
+				/>
+			</div>
+		{:else}
+			<div class="flex justify-center items-center h-full">
+				<div class="flex flex-col items-center gap-4">
+					<div
+						class="h-20 w-20 rounded-full bg-muted text-muted-foreground flex justify-center items-center"
+					>
+						<CalendarIcon size={40} />
+					</div>
+					<div class="text-lg font-semibold text-muted-foreground">
+						No upcoming appointments
+					</div>
+				</div>
+			</div>
+		{/if}
 	</div>
 </TenantLayout>
