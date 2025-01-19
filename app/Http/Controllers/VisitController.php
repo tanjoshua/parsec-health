@@ -15,7 +15,7 @@ class VisitController extends Controller
     public function index(Tenant $tenant, Request $request)
     {
         $pageSize = $request->input('pageSize', 10);
-        $visits = $tenant->visits()->with('patient')->paginate($pageSize)->withQueryString();
+        $visits = $tenant->visits()->with('customer')->paginate($pageSize)->withQueryString();
         return Inertia::render('Visits', [
             'tenant' => $tenant,
             'visits' => $visits,

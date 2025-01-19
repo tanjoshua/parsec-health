@@ -1,9 +1,9 @@
-export type Patient = {
+export type Customer = {
     tenant_id: number;
     id: number;
 
     name: string;
-    tenant_patient_number: number;
+    tenant_customer_number: number;
     date_of_birth: string;
 
     updated_at: string;

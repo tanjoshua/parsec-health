@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Patient;
+use App\Models\Customer;
 use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,8 +23,8 @@ class AppointmentFactory extends Factory
             'end_time' => function (array $attributes) {
                 return $this->faker->dateTimeBetween($attributes['start_time'], '+2 hours');
             },
-            'patient_id' => null,
-            'patient_name' => $this->faker->name(),
+            'customer_id' => null,
+            'customer_name' => $this->faker->name(),
             'remarks' => $this->faker->sentence(),
             'notes' => $this->faker->paragraph(),
             'tenant_id' => null,
@@ -42,13 +42,13 @@ class AppointmentFactory extends Factory
     }
 
     /**
-     * Configure the appointment for a specific patient.
+     * Configure the appointment for a specific customer.
      */
-    public function forPatient(Patient $patient): static
+    public function forCustomer(Customer $customer): static
     {
         return $this->state(fn () => [
-            'tenant_id' => $patient->tenant_id,
-            'patient_id' => $patient->id,
+            'tenant_id' => $customer->tenant_id,
+            'customer_id' => $customer->id,
         ]);
     }
 }

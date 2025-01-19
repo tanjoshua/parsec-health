@@ -18,8 +18,8 @@ return new class extends Migration
             // tenant relationships
             $table->foreignId('tenant_id')->constrained()->cascadeOnDelete();
 
-            // patient data
-            $table->foreignId('patient_id')->constrained()->cascadeOnDelete();
+            // customer data
+            $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
 
             // visit data
             $table->dateTime('registered_at');

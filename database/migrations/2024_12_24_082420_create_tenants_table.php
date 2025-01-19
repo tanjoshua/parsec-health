@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->unsignedBigInteger('next_patient_number')->default(1);
+            $table->unsignedBigInteger('next_customer_number')->default(1);
             $table->timestamps();
         });
 

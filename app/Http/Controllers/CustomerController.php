@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Patient;
+use App\Models\Customer;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class PatientController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class PatientController extends Controller
     {
         $search = $request->input('search');
         $pageSize = $request->input('pageSize', 10);
-        $patients = $tenant->patients()
+        $customers = $tenant->customers()
             ->when($search, function ($queryBuilder, $search) {
                 $queryBuilder->where('name', 'ilike', "%{$search}%");
             })
@@ -25,7 +25,7 @@ class PatientController extends Controller
 
         return Inertia::render('Patients', [
             'tenant' => $tenant,
-            'patients' => $patients,
+            'customers' => $customers,
             'search' => $search,
             'pageSize' => $pageSize,
         ]);
@@ -50,7 +50,7 @@ class PatientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Patient $patient)
+    public function show(Customer $customer)
     {
         //
     }
@@ -58,7 +58,7 @@ class PatientController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Patient $patient)
+    public function edit(Customer $customer)
     {
         //
     }
@@ -66,7 +66,7 @@ class PatientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Patient $patient)
+    public function update(Request $request, Customer $customer)
     {
         //
     }
@@ -74,7 +74,7 @@ class PatientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Patient $patient)
+    public function destroy(Customer $customer)
     {
         //
     }

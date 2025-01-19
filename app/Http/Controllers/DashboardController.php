@@ -14,13 +14,13 @@ class DashboardController extends Controller
     {
         $activeVisits = $tenant->visits()
             ->whereNull('left_at')
-            ->with('patient')
+            ->with('customer')
             ->orderBy('registered_at', 'desc')
             ->get();
 
         $completedVisits = $tenant->visits()
             ->whereNotNull('left_at')
-            ->with('patient')
+            ->with('customer')
             ->orderBy('left_at', 'desc')
             ->take(11)
             ->get();

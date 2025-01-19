@@ -3,16 +3,16 @@
 	import TenantLayout from "@/Layouts/TenantLayout.svelte";
 	import * as Breadcrumb from "@/components/ui/breadcrumb";
 	import type { PaginatedResult } from "@/types/pagination";
-	import type { Patient } from "@/types/patient";
 	import type { Tenant } from "@/types/tenant";
+	import type { Customer } from "@/types/customer";
 
 	let {
-		patients,
+		customers,
 		search,
 		pageSize,
 		tenant,
 	}: {
-		patients: PaginatedResult<Patient>;
+		customers: PaginatedResult<Customer>;
 		search: string;
 		pageSize: number;
 		tenant: Tenant;
@@ -44,7 +44,7 @@
 			<h2 class="text-2xl font-bold">Patients</h2>
 		</div>
 		<div>
-			<PatientTable {patients} {search} pageSize={pageSize.toString()} />
+			<PatientTable {customers} {search} pageSize={pageSize.toString()} />
 		</div>
 	</div>
 </TenantLayout>

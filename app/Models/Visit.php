@@ -13,7 +13,7 @@ class Visit extends Model
 
     protected $fillable = [
         'tenant_id',
-        'patient_id',
+        'customer_id',
         'registered_at',
         'left_at',
         'remarks',
@@ -30,8 +30,8 @@ class Visit extends Model
         return $this->belongsTo(Tenant::class);
     }
 
-    public function patient(): BelongsTo
+    public function customer(): BelongsTo
     {
-        return $this->belongsTo(Patient::class);
+        return $this->belongsTo(Customer::class);
     }
 }

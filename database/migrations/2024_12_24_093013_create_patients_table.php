@@ -11,20 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('patients', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
 
             // tenant relationships
             $table->foreignId('tenant_id')->constrained()->cascadeOnDelete();
-            $table->unsignedBigInteger('tenant_patient_number');
+            $table->unsignedBigInteger('tenant_customer_number');
 
-            // patient data
+            // customer data
             $table->string('name');
             $table->date('date_of_birth');
             // $table->string('identification');
 
-            $table->unique(['tenant_id', 'tenant_patient_number']);
+            $table->unique(['tenant_id', 'tenant_customer_number']);
         });
     }
 
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('patients');
+        Schema::dropIfExists('customers');
     }
 };

@@ -23,9 +23,9 @@
 		{#if selectedVisit}
 			<div class="border-t p-4">
 				<div class="text-sm text-muted-foreground">
-					#{selectedVisit.patient.tenant_patient_number}
+					#{selectedVisit.customer.tenant_customer_number}
 				</div>
-				<div class="font-semibold">{selectedVisit.patient.name}</div>
+				<div class="font-semibold">{selectedVisit.customer.name}</div>
 			</div>
 		{/if}
 	</div>

@@ -51,8 +51,8 @@
 				<div class="flex items-center">
 					<div class="flex items-center gap-2">
 						<div class="font-semibold">
-							#{visit.patient.tenant_patient_number} - {visit
-								.patient.name}
+							#{visit.customer.tenant_customer_number} - {visit
+								.customer.name}
 						</div>
 						<!-- {#if true}
 							<span

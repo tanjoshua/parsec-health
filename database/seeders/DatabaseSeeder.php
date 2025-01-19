@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Appointment;
-use App\Models\Patient;
+use App\Models\Customer;
 use App\Models\Tenant;
 use App\Models\User;
 use App\Models\Visit;
@@ -35,18 +35,18 @@ class DatabaseSeeder extends Seeder
         // Attach the user to the tenant
         $tenant->users()->attach($user);
 
-        // Create some test patients for the tenant
-        $patients = Patient::factory()
+        // Create some test customers for the tenant
+        $customers = Customer::factory()
             ->count(50)
             ->forTenant($tenant)
             ->create();
 
-        // Create some current visits (patients still in clinic)
+        // Create some current visits (customers still in venue)
         Visit::factory()
             ->count(10)
             ->forTenant($tenant)
             ->sequence(fn ($sequence) => [
-                'patient_id' => $patients[$sequence->index % count($patients)]->id,
+                'customer_id' => $customers[$sequence->index % count($customers)]->id,
                 'registered_at' => now()->subHours(8)->addMinutes($sequence->index * 30),
             ])
             ->create([
@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
         Visit::factory()
             ->count(15)
             ->forTenant($tenant)
-            ->sequence(fn ($sequence) => ['patient_id' => $patients[$sequence->index % count($patients)]->id])
+            ->sequence(fn ($sequence) => ['customer_id' => $customers[$sequence->index % count($customers)]->id])
             ->create([
                 'registered_at' => fake()->dateTimeBetween('-1 week', '-1 day'),
                 'left_at' => function (array $attributes) {

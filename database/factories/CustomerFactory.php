@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\DB;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Patient>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Customer>
  */
-class PatientFactory extends Factory
+class CustomerFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -21,7 +21,7 @@ class PatientFactory extends Factory
         return [
             'name' => fake()->name(),
             'tenant_id' => null,
-            'tenant_patient_number' => null,
+            'tenant_customer_number' => null,
             'date_of_birth' => fake()->dateTimeBetween('-100 years', '-15 years'),
         ];
     }
@@ -31,13 +31,13 @@ class PatientFactory extends Factory
         return $this->state(function () use ($tenant) {
             return DB::transaction(function () use ($tenant) {
                 $tenant = Tenant::lockForUpdate()->find($tenant->id);
-                $number = $tenant->next_patient_number;
-                $tenant->next_patient_number += 1;
+                $number = $tenant->next_customer_number;
+                $tenant->next_customer_number += 1;
                 $tenant->save();
 
                 return [
                     'tenant_id' => $tenant->id,
-                    'tenant_patient_number' => $number,
+                    'tenant_customer_number' => $number,
                 ];
             });
         });

@@ -22,9 +22,9 @@ return new class extends Migration
             $table->dateTime('start_time');
             $table->dateTime('end_time');
 
-            // patient data (either linked to a patient or just a name)
-            $table->foreignId('patient_id')->nullable()->constrained()->cascadeOnDelete();
-            $table->string('patient_name')->nullable();
+            // customer data (either linked to a customer or just a name)
+            $table->foreignId('customer_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->string('customer_name')->nullable();
 
             $table->text('remarks')->nullable();
             $table->text('notes')->nullable();

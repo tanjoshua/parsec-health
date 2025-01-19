@@ -1,8 +1,8 @@
 export type Visit = {
     id: number;
-    patient: {
+    customer: {
         id: string;
-        tenant_patient_number: number;
+        tenant_customer_number: number;
         name: string;
     };
     registered_at: string;

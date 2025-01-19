@@ -14,8 +14,8 @@ class Appointment extends Model
     protected $fillable = [
         'start_time',
         'end_time',
-        'patient_id',
-        'patient_name',
+        'customer_id',
+        'customer_name',
         'remarks',
         'notes',
         'tenant_id',
@@ -26,9 +26,9 @@ class Appointment extends Model
         'end_time' => 'datetime',
     ];
 
-    public function patient(): BelongsTo
+    public function customer(): BelongsTo
     {
-        return $this->belongsTo(Patient::class);
+        return $this->belongsTo(Customer::class);
     }
 
     public function tenant(): BelongsTo

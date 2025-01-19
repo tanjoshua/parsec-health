@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Patient;
+use App\Models\Customer;
 use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +20,7 @@ class VisitFactory extends Factory
     {
         return [
             'tenant_id' => null,
-            'patient_id' => null,
+            'customer_id' => null,
             'registered_at' => fake()->dateTimeBetween('-1 week', 'now'),
             'left_at' => fn () => fake()->boolean(70) ? fake()->dateTimeBetween('-1 week', 'now') : null,
             'remarks' => fake()->optional(0.7)->sentence(),
@@ -39,13 +39,13 @@ class VisitFactory extends Factory
     }
 
     /**
-     * Configure the visit for a specific patient.
+     * Configure the visit for a specific customer.
      */
-    public function forPatient(Patient $patient): static
+    public function forCustomer(Customer $customer): static
     {
         return $this->state(fn () => [
-            'tenant_id' => $patient->tenant_id,
-            'patient_id' => $patient->id,
+            'tenant_id' => $customer->tenant_id,
+            'customer_id' => $customer->id,
         ]);
     }
 }

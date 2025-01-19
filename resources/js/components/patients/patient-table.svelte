@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as Table from "@/components/ui/table";
-	import type { Patient } from "@/types/patient";
+	import type { Customer } from "@/types/customer";
 	import type { PaginatedResult } from "@/types/pagination";
 	import PatientTableActions from "./patient-table-actions.svelte";
 	import { useForm } from "@inertiajs/svelte";
@@ -8,11 +8,11 @@
 	import PaginationBar from "../table/pagination-bar.svelte";
 
 	let {
-		patients,
+		customers,
 		search,
 		pageSize,
 	}: {
-		patients: PaginatedResult<Patient>;
+		customers: PaginatedResult<Customer>;
 		search: string;
 		pageSize: string;
 	} = $props();
@@ -65,19 +65,19 @@
 			</Table.Row>
 		</Table.Header>
 		<Table.Body>
-			{#each patients.data as patient (patient.id)}
+			{#each customers.data as customer (customer.id)}
 				<Table.Row>
 					<Table.Cell class="w-[200px]">
-						{patient.tenant_patient_number
+						{customer.tenant_customer_number
 							.toString()
 							.padStart(4, "0")}
 					</Table.Cell>
 					<Table.Cell class="font-medium">
-						{patient.name}
+						{customer.name}
 					</Table.Cell>
-					<Table.Cell>{patient.date_of_birth}</Table.Cell>
+					<Table.Cell>{customer.date_of_birth}</Table.Cell>
 					<Table.Cell>
-						<PatientTableActions id={patient.id.toString()} />
+						<PatientTableActions id={customer.id.toString()} />
 					</Table.Cell>
 				</Table.Row>
 			{:else}
@@ -93,7 +93,7 @@
 
 <div class="mt-4">
 	<PaginationBar
-		pagination={patients}
+		pagination={customers}
 		pageSize={$form.pageSize}
 		onPageSizeChange={(value) => {
 			$form.pageSize = value;

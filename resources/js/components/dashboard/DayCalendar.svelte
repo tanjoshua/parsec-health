@@ -5,10 +5,10 @@
 	import { onMount } from "svelte";
 	import type { Appointment } from "@/types/appointment";
 	import * as Card from "../ui/card";
-	const props = $props<{
+	const props: {
 		now: Date;
 		appointments: Appointment[];
-	}>();
+	} = $props();
 
 	const HOUR_BLOCK_HEIGHT_PX = 120;
 
@@ -91,16 +91,18 @@
 		{#each props.appointments as appointment}
 			<div
 				class="absolute w-full pl-12"
-				style:top="{calculateTopPosition(appointment.start_time)}px"
+				style:top="{calculateTopPosition(
+					new Date(appointment.start_time),
+				)}px"
 				style:height="{calculateHeight(
-					appointment.start_time,
-					appointment.end_time,
+					new Date(appointment.start_time),
+					new Date(appointment.end_time),
 				)}px"
 			>
 				<Card.Root class="h-full">
 					<Card.Content>
 						<div class="font-semibold">
-							{appointment.patient_name}
+							{appointment.customer_name}
 						</div>
 						<div class="text-sm text-foreground-muted">
 							{dayjs(appointment.start_time).format("h:mm A")} - {dayjs(

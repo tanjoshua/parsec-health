@@ -28,7 +28,7 @@
 				<div class="flex items-start">
 					<div>
 						<div class="font-semibold">
-							{appointment.patient_name}
+							{appointment.customer_name}
 						</div>
 					</div>
 

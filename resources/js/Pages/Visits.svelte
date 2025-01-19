@@ -73,7 +73,7 @@
 								</Table.Cell>
 								<Table.Cell>
 									<div class="font-medium">
-										{visit.patient.name}
+										{visit.customer.name}
 									</div>
 									<div class="text-xs text-muted-foreground">
 										Visited {dayjs(
