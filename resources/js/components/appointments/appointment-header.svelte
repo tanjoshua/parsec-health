@@ -1,9 +1,8 @@
 <script lang="ts">
 	import * as Tabs from "@/components/ui/tabs/index";
-	import { Button } from "@/components/ui/button";
 	import type { Tenant } from "@/types/tenant";
 	import { router } from "@inertiajs/svelte";
-	import { Plus } from "lucide-svelte";
+	import CreateAppointment from "./create-appointment.svelte";
 
 	let { tenant, page }: { tenant: Tenant; page: "upcoming" | "calendar" } =
 		$props();
@@ -28,8 +27,5 @@
 			>
 		</Tabs.List>
 	</Tabs.Root>
-	<Button class="" variant="outline">
-		<Plus />
-		Create Appointment
-	</Button>
+	<CreateAppointment {tenant} />
 </div>
