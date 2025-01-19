@@ -7,7 +7,7 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/fonts.css',
-                'resources/css/app.css', 
+                'resources/css/app.css',
                 'resources/js/app.ts'
             ],
             ssr: 'resources/js/ssr.ts',
@@ -15,8 +15,20 @@ export default defineConfig({
         }),
         svelte({
             compilerOptions: {
-                hmr: true  // Use the new recommended way to enable HMR
+                hmr: { preserve: true },
+            },
+            hot: {
+                preserveLocalState: true,
+                fullReload: false
             }
         }),
     ],
+    resolve: {
+        alias: {
+            '@': '/resources/js'
+        }
+    },
+    optimizeDeps: {
+        include: ['svelte']
+    }
 });
