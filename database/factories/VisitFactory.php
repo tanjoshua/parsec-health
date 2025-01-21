@@ -22,8 +22,8 @@ class VisitFactory extends Factory
             'tenant_id' => null,
             'customer_id' => null,
             'registered_at' => fake()->dateTimeBetween('-1 week', 'now'),
-            'left_at' => fn () => fake()->boolean(70) ? fake()->dateTimeBetween('-1 week', 'now') : null,
-            'remarks' => fake()->optional(0.7)->sentence(),
+            'left_at' => null,
+            'remarks' => fake()->optional(0.9)->sentence(),
             'notes' => fake()->optional(0.5)->paragraph(),
         ];
     }

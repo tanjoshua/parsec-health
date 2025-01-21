@@ -6,7 +6,7 @@
 	import { Button } from "../ui/button";
 	import { page } from "@inertiajs/svelte";
 	import type { Tenant } from "@/types/tenant";
-	import { cn } from "@/utils";
+	import { cn, formatReadableDate } from "@/utils";
 	import ScrollArea from "../ui/scroll-area/scroll-area.svelte";
 
 	dayjs.extend(relativeTime);
@@ -23,17 +23,6 @@
 
 	const pageProps = $page.props;
 	const tenant = pageProps.tenant as Tenant;
-
-	function formatRegistrationDate(
-		date: string | Date | undefined,
-		now: Date,
-	) {
-		if (!date) return "";
-		const registrationDate = dayjs(date);
-		return dayjs(now).isSame(registrationDate, "day")
-			? registrationDate.format("h:mm A")
-			: registrationDate.format("DD/MM/YYYY h:mm A");
-	}
 </script>
 
 {#snippet visitCard(visit: Visit)}
@@ -48,34 +37,24 @@
 			}}
 		>
 			<div class="flex w-full flex-col gap-1">
-				<div class="flex items-center">
-					<div class="flex items-center gap-2">
-						<div class="font-semibold">
-							#{visit.customer.tenant_customer_number} - {visit
-								.customer.name}
+				<div class="flex items-start">
+					<div class="">
+						<div class="text-sm text-muted-foreground">
+							#{visit.customer.tenant_customer_number}
 						</div>
-						<!-- {#if true}
-							<span
-								class="flex h-2 w-2 rounded-full bg-blue-600"
-							/>
-						{/if} -->
+						<div class="font-semibold">
+							{visit.customer.name}
+						</div>
 					</div>
-					<div
-						class={cn(
-							"ml-auto text-xs",
-							selectedVisit?.id === visit.id
-								? "text-foreground"
-								: "text-muted-foreground",
-						)}
-					>
-						{dayjs(visit.left_at).from(props.now)}
+					<div class={cn("ml-auto text-xs text-muted-foreground")}>
+						{dayjs(visit.registered_at).from(props.now)}
 					</div>
 				</div>
-				<div class="text-xs font-medium">
-					Registered: {formatRegistrationDate(
-						visit.registered_at,
-						props.now,
-					)}
+				<div class="text-xs">
+					Registered:
+					<span class="font-semibold">
+						{formatReadableDate(new Date(visit.registered_at))}
+					</span>
 				</div>
 			</div>
 			<div class="text-muted-foreground line-clamp-2 text-xs">
