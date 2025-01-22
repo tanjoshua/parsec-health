@@ -50,9 +50,9 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Customer $customer)
+    public function show(Tenant $tenant, Customer $patient)
     {
-        //
+        return Inertia::render('Patient', ['tenant' => $tenant, 'customer' => $patient]);
     }
 
     /**
