@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { HTMLAnchorAttributes } from "svelte/elements";
+	import { Link } from "@inertiajs/svelte";
 	import type { Snippet } from "svelte";
 	import type { WithElementRef } from "bits-ui";
 	import { cn } from "@/utils.js";
@@ -17,15 +18,14 @@
 
 	const attrs = $derived({
 		class: cn("hover:text-foreground transition-colors", className),
-		href,
 		...restProps,
 	});
 </script>
 
-{#if child}
-	{@render child({ props: attrs })}
-{:else}
-	<a bind:this={ref} {...attrs}>
+{#if href}
+	<Link {href} {...attrs}>
 		{@render children?.()}
-	</a>
+	</Link>
+{:else if child}
+	{@render child({ props: attrs })}
 {/if}
