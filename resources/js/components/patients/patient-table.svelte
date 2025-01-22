@@ -3,15 +3,18 @@
 	import type { Customer } from "@/types/customer";
 	import type { PaginatedResult } from "@/types/pagination";
 	import PatientTableActions from "./patient-table-actions.svelte";
-	import { useForm } from "@inertiajs/svelte";
+	import { Link, useForm } from "@inertiajs/svelte";
 	import SearchInput from "../ui/input/search-input.svelte";
 	import PaginationBar from "../table/pagination-bar.svelte";
+	import type { Tenant } from "@/types/tenant";
 
 	let {
+		tenant,
 		customers,
 		search,
 		pageSize,
 	}: {
+		tenant: Tenant;
 		customers: PaginatedResult<Customer>;
 		search: string;
 		pageSize: string;
@@ -73,7 +76,14 @@
 							.padStart(4, "0")}
 					</Table.Cell>
 					<Table.Cell class="font-medium">
-						{customer.name}
+						<Link
+							href={route("tenants.patients.show", {
+								tenant: tenant.id,
+								patient: customer.id,
+							})}
+						>
+							{customer.name}
+						</Link>
 					</Table.Cell>
 					<Table.Cell>{customer.date_of_birth}</Table.Cell>
 					<Table.Cell>
