@@ -5,7 +5,7 @@
 	import { Button } from "@/components/ui/button";
 	import Calendar from "@/components/ui/calendar/calendar.svelte";
 	import type { Tenant } from "@/types/tenant";
-	import { Plus } from "lucide-svelte";
+	import { CalendarIcon, Plus } from "lucide-svelte";
 	import {
 		type DateValue,
 		getLocalTimeZone,
@@ -85,9 +85,24 @@
 						{selectedDayDate.format("D MMMM YYYY, dddd")}
 					</div>
 
-					{#each appointments as appointment (appointment.id)}
-						<AppointmentCard {appointment} />
-					{/each}
+					{#if appointments.length > 0}
+						{#each appointments as appointment (appointment.id)}
+							<AppointmentCard {appointment} />
+						{/each}
+					{:else}
+						<div class="mt-64 flex flex-col items-center gap-4">
+							<div
+								class="h-20 w-20 rounded-full bg-muted text-muted-foreground flex justify-center items-center"
+							>
+								<CalendarIcon size={40} />
+							</div>
+							<div
+								class="text-lg font-semibold text-muted-foreground"
+							>
+								No appointments on this day
+							</div>
+						</div>
+					{/if}
 				</div>
 			</ScrollArea>
 		</div>
