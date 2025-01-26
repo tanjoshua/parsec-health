@@ -41,7 +41,7 @@
 	{/if}
 
 	<form on:submit|preventDefault={onSubmit}>
-		<div clas="mt-1">
+		<div class="mt-1">
 			<FormInput
 				label="Email or Username"
 				id="login"
@@ -83,7 +83,8 @@
 
 			<Button
 				class={`ml-4 ${$form.processing ? "opacity-25" : ""}`}
-				disabled={$form.processing}>Log in</Button
+				disabled={$form.processing}
+				type="submit">Log in</Button
 			>
 		</div>
 	</form>
