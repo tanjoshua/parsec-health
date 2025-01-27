@@ -63,9 +63,25 @@ class AppointmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Tenant $tenant, Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'date' => 'required|date',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
+        ]);
+
+        $start_time = $request->date('date')->setTimeFromTimeString($request->start_time);
+        $end_time = $request->date('date')->setTimeFromTimeString($request->end_time);
+
+        $appointment = $tenant->appointments()->create([
+            'patient_name' => $validatedData['name'],
+            'start_time' => $start_time,
+            'end_time' => $end_time,
+        ]);
+
+        return $appointment;
     }
 
     /**
