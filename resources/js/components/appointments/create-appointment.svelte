@@ -21,14 +21,15 @@
 	} = $props();
 	let open = $state(false);
 
-	const initialDate =
+	// Initialize date as a string
+	const initialDateString =
 		pageType === "calendar" && $page.props.selectedDay
-			? parseDate($page.props.selectedDay as string)
-			: undefined;
+			? ($page.props.selectedDay as string)
+			: "";
 
 	const form = useForm({
 		name: "",
-		date: initialDate,
+		date: initialDateString,
 		start_time: "",
 		end_time: "",
 	});
@@ -36,16 +37,15 @@
 	const onSubmit = (e: SubmitEvent) => {
 		e.preventDefault();
 		const formData = $form.data();
-		const date = formData.date as unknown as DateValue;
 
 		router.post(
 			route("tenants.appointments.store", tenant),
 			{
 				name: formData.name,
-				date: date.toString(),
+				date: formData.date,
 				start_time: formData.start_time,
 				end_time: formData.end_time,
-				timezone: getLocalTimeZone(), // Include client's timezone
+				timezone: getLocalTimeZone(),
 			},
 			{
 				onSuccess: () => {
@@ -54,6 +54,11 @@
 					if (pageType === "calendar") {
 						router.visit(
 							route("tenants.appointments.calendar", tenant),
+							{
+								data: {
+									day: formData.date,
+								},
+							},
 						);
 					} else {
 						router.reload({
@@ -82,7 +87,12 @@
 			</Dialog.Description>
 			<form class="grid gap-4 py-4" onsubmit={onSubmit}>
 				<FormInput label="Patient Name" bind:value={$form.name} />
-				<FormDatepicker label="Date" bind:value={$form.date} />
+				<FormDatepicker
+					label="Date"
+					bind:value={() =>
+						$form.date ? parseDate($form.date) : undefined,
+					(v) => ($form.date = v ? v.toString() : "")}
+				/>
 				<div class="grid grid-cols-2 gap-2">
 					<FormInput
 						label="Start"
