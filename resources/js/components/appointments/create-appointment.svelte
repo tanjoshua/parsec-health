@@ -7,9 +7,9 @@
 	import { router, useForm } from "@inertiajs/svelte";
 	import FormDatepicker from "../ui/input/form-datepicker.svelte";
 	import { getLocalTimeZone, type DateValue } from "@internationalized/date";
-	import { get } from "svelte/store";
 
 	let { tenant }: { tenant: Tenant } = $props();
+	let open = $state(false);
 
 	const form = useForm({
 		name: "",
@@ -24,17 +24,29 @@
 		const formData = $form.data();
 		const date = formData.date as unknown as DateValue;
 
-		// TODO: FIX timezone issue
-		router.post(route("tenants.appointments.store", tenant), {
-			name: $form.data.name,
-			date: date.toDate(getLocalTimeZone()),
-			start_time: formData.start_time,
-			end_time: formData.end_time,
-		});
+		router.post(
+			route("tenants.appointments.store", tenant),
+			{
+				name: formData.name,
+				date: date.toString(),
+				start_time: formData.start_time,
+				end_time: formData.end_time,
+				timezone: getLocalTimeZone(), // Include client's timezone
+			},
+			{
+				onSuccess: () => {
+					$form.reset();
+					open = false;
+					router.reload({
+						only: ["appointments"],
+					});
+				},
+			},
+		);
 	};
 </script>
 
-<Dialog.Root>
+<Dialog.Root bind:open>
 	<Dialog.Trigger>
 		<Button class="" variant="outline">
 			<Plus />

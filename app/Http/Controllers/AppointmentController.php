@@ -67,21 +67,29 @@ class AppointmentController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'date' => 'required|date',
+            'date' => 'required|date_format:Y-m-d',
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
+            'timezone' => 'required|string',
         ]);
-
-        $start_time = $request->date('date')->setTimeFromTimeString($request->start_time);
-        $end_time = $request->date('date')->setTimeFromTimeString($request->end_time);
-
+    
+        $startDateTime = Carbon::createFromFormat(
+            'Y-m-d H:i',
+            "{$validatedData['date']} {$validatedData['start_time']}",
+            $validatedData['timezone']
+        )->setTimezone('UTC');
+    
+        $endDateTime = Carbon::createFromFormat(
+            'Y-m-d H:i',
+            "{$validatedData['date']} {$validatedData['end_time']}",
+            $validatedData['timezone']
+        )->setTimezone('UTC');
+    
         $appointment = $tenant->appointments()->create([
             'patient_name' => $validatedData['name'],
-            'start_time' => $start_time,
-            'end_time' => $end_time,
+            'start_time' => $startDateTime,
+            'end_time' => $endDateTime,
         ]);
-
-        return $appointment;
     }
 
     /**
