@@ -27,5 +27,5 @@
 			>
 		</Tabs.List>
 	</Tabs.Root>
-	<CreateAppointment {tenant} />
+	<CreateAppointment {tenant} {page} />
 </div>

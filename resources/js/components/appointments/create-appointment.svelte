@@ -4,22 +4,36 @@
 	import { Plus } from "lucide-svelte";
 	import type { Tenant } from "@/types/tenant";
 	import FormInput from "../ui/input/form-input.svelte";
-	import { router, useForm } from "@inertiajs/svelte";
+	import { page, router, useForm } from "@inertiajs/svelte";
 	import FormDatepicker from "../ui/input/form-datepicker.svelte";
-	import { getLocalTimeZone, type DateValue } from "@internationalized/date";
+	import {
+		getLocalTimeZone,
+		parseDate,
+		type DateValue,
+	} from "@internationalized/date";
 
-	let { tenant }: { tenant: Tenant } = $props();
+	let {
+		tenant,
+		page: pageType,
+	}: {
+		tenant: Tenant;
+		page: "upcoming" | "calendar";
+	} = $props();
 	let open = $state(false);
+
+	const initialDate =
+		pageType === "calendar" && $page.props.selectedDay
+			? parseDate($page.props.selectedDay as string)
+			: undefined;
 
 	const form = useForm({
 		name: "",
-		date: undefined,
+		date: initialDate,
 		start_time: "",
 		end_time: "",
 	});
 
 	const onSubmit = (e: SubmitEvent) => {
-		console.log($form.data());
 		e.preventDefault();
 		const formData = $form.data();
 		const date = formData.date as unknown as DateValue;
@@ -37,9 +51,15 @@
 				onSuccess: () => {
 					$form.reset();
 					open = false;
-					router.reload({
-						only: ["appointments"],
-					});
+					if (pageType === "calendar") {
+						router.visit(
+							route("tenants.appointments.calendar", tenant),
+						);
+					} else {
+						router.reload({
+							only: ["appointments"],
+						});
+					}
 				},
 			},
 		);

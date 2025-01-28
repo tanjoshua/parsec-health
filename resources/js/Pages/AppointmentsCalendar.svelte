@@ -28,7 +28,6 @@
 		selectedDay?: string;
 		appointments: Appointment[];
 	} = $props();
-	console.log(appointments);
 
 	let selectedDay = selectedDayProp
 		? parseDate(selectedDayProp)
