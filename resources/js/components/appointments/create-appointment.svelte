@@ -41,7 +41,7 @@
 		router.post(
 			route("tenants.appointments.store", tenant),
 			{
-				name: formData.name,
+				customer_name: formData.name,
 				date: formData.date,
 				start_time: formData.start_time,
 				end_time: formData.end_time,

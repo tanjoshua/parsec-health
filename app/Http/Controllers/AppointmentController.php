@@ -66,7 +66,7 @@ class AppointmentController extends Controller
     public function store(Tenant $tenant, Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'customer_name' => 'required|string|max:255',
             'date' => 'required|date_format:Y-m-d',
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
@@ -86,7 +86,7 @@ class AppointmentController extends Controller
         )->setTimezone('UTC');
     
         $appointment = $tenant->appointments()->create([
-            'patient_name' => $validatedData['name'],
+            'customer_name' => $validatedData['customer_name'],
             'start_time' => $startDateTime,
             'end_time' => $endDateTime,
         ]);
