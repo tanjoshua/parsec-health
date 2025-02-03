@@ -4,6 +4,7 @@ export type Visit = {
         id: string;
         tenant_customer_number: number;
         name: string;
+        metadata: string
     };
     registered_at: string;
     left_at?: string;

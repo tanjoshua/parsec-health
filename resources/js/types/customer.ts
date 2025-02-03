@@ -8,4 +8,6 @@ export type Customer = {
 
     updated_at: string;
     created_at: string;
+
+    metadata: string;
 };

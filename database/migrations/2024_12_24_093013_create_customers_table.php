@@ -24,6 +24,8 @@ return new class extends Migration
             $table->date('date_of_birth');
             // $table->string('identification');
 
+            $table->string('metadata')->default('{}')->nullable();
+
             $table->unique(['tenant_id', 'tenant_customer_number']);
         });
     }

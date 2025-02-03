@@ -23,6 +23,13 @@ class CustomerFactory extends Factory
             'tenant_id' => null,
             'tenant_customer_number' => null,
             'date_of_birth' => fake()->dateTimeBetween('-100 years', '-15 years'),
+            'metadata' => json_encode([
+                'random field' => 'random value',
+                'random field 2' => 'random value 2',
+                'random field 3' => 'random value 3',
+                'random field 4' => 'random value 4',
+                'random field 5' => 'random value 5',
+            ]),
         ];
     }
 

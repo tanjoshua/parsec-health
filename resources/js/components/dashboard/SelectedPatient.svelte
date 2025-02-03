@@ -8,6 +8,11 @@
 		now: Date;
 		selectedVisit: Visit | null;
 	} = $props();
+
+	let patientMetadata = $derived.by(() => {
+		if (!selectedVisit?.customer.metadata) return {};
+		return JSON.parse(selectedVisit.customer.metadata);
+	});
 </script>
 
 <div class="rounded-md border h-full">
@@ -26,6 +31,16 @@
 					#{selectedVisit.customer.tenant_customer_number}
 				</div>
 				<div class="font-semibold">{selectedVisit.customer.name}</div>
+				<div class="mt-2 grid grid-cols-4 gap-2">
+					{#each Object.entries(patientMetadata) as [key, value]}
+						<div class="grid gap-1">
+							<div class="text-xs text-muted-foreground">
+								{key}
+							</div>
+							<div class="text-sm">{value}</div>
+						</div>
+					{/each}
+				</div>
 			</div>
 		{/if}
 	</div>

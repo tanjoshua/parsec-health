@@ -20,7 +20,6 @@
 		pageSize: string;
 		appointments: PaginatedResult<Appointment>;
 	} = $props();
-	console.log(appointments.data);
 </script>
 
 <svelte:head>

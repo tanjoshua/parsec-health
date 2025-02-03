@@ -7,7 +7,7 @@ use App\Models\Tenant;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class CustomerController extends Controller
+class PatientController extends Controller
 {
     /**
      * Display a listing of the resource.
