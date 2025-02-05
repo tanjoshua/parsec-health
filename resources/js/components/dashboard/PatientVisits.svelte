@@ -33,7 +33,11 @@
 				selectedVisit?.id === visit.id && "bg-muted",
 			)}
 			onclick={() => {
-				selectedVisit = visit;
+				if (selectedVisit?.id === visit.id) {
+					selectedVisit = null;
+				} else {
+					selectedVisit = visit;
+				}
 			}}
 		>
 			<div class="flex w-full flex-col gap-1">
