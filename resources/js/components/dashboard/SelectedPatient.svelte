@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Visit } from "@/types/visit";
+	import { formatReadableDate } from "@/utils";
 	import dayjs from "dayjs";
 	let {
 		now,
@@ -40,6 +41,25 @@
 							<div class="text-sm">{value}</div>
 						</div>
 					{/each}
+				</div>
+
+				<div class="mt-4 grid gap-2">
+					<div class="">
+						<div class="text-sm font-medium">Registered</div>
+						<div class="text-xs">
+							{formatReadableDate(
+								new Date(selectedVisit.registered_at),
+							)}
+						</div>
+					</div>
+					<div class="">
+						<div class="text-sm font-medium">Remarks</div>
+						<div class="text-xs">{selectedVisit.remarks}</div>
+					</div>
+					<div class="">
+						<div class="text-sm font-medium">Notes</div>
+						<div class="text-xs">{selectedVisit.notes}</div>
+					</div>
 				</div>
 			</div>
 		{/if}

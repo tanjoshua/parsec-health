@@ -11,6 +11,8 @@
 				destructive:
 					"bg-destructive text-destructive-foreground hover:bg-destructive/80 border-transparent shadow",
 				outline: "text-foreground",
+				success:
+					"bg-green-500 text-white hover:bg-green-600 border-transparent shadow",
 			},
 		},
 		defaultVariants: {
