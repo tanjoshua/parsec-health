@@ -7,17 +7,20 @@
 	import type { Tenant } from "@/types/tenant";
 	import TenantLayout from "@/Layouts/TenantLayout.svelte";
 	import SelectedPatient from "@/components/dashboard/SelectedPatient.svelte";
+	import { router, page } from "@inertiajs/svelte";
 
 	const {
 		activeVisits,
 		completedVisits,
 		appointments,
 		tenant,
+		visit,
 	}: {
 		activeVisits: Visit[];
 		completedVisits: Visit[];
 		appointments: Appointment[];
 		tenant: Tenant;
+		visit: Visit | null;
 	} = $props();
 
 	// Add a reactive time value that updates every minute
@@ -31,7 +34,13 @@
 		return () => clearInterval(interval); // Cleanup on component destroy
 	});
 
-	let selectedVisit = $state<Visit | null>(null);
+	let selectedVisit = $state<Visit | null>(visit);
+
+	$effect(() => {
+		if (selectedVisit) {
+			router.reload({ replace: true, data: { visit: selectedVisit.id } });
+		}
+	});
 </script>
 
 <svelte:head>
