@@ -8,6 +8,7 @@
 	import type { Tenant } from "@/types/tenant";
 	import { cn, formatReadableDate } from "@/utils";
 	import ScrollArea from "../ui/scroll-area/scroll-area.svelte";
+	import CreateVisit from "../visits/create-visit.svelte";
 
 	dayjs.extend(relativeTime);
 
@@ -73,11 +74,16 @@
 	<Tabs.Root value="active">
 		<div class="flex justify-between items-center">
 			<h2 class="text-xl font-bold">Patient Visit Queue</h2>
+		</div>
+		<div class="mt-4 flex justify-between items-center">
 			<div>
 				<Tabs.List class="grid grid-cols-2">
 					<Tabs.Trigger value="active">Active</Tabs.Trigger>
 					<Tabs.Trigger value="completed">Completed</Tabs.Trigger>
 				</Tabs.List>
+			</div>
+			<div>
+				<CreateVisit {tenant} />
 			</div>
 		</div>
 		<Tabs.Content value="active">
